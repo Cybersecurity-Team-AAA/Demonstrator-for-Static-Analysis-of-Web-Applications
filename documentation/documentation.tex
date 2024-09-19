@@ -77,10 +77,83 @@
 
 
 \section{Introduction}
-The project aims to create a demonstrator of the use of static analysis tools for web applications. The web application used 
-for this puprose is based on a React front-end and an Express back-end. It is an application which allows to sellers to receive
-payments from users which have a wallet that can be recharged. There is also the admin who is able to view and modify the 
-transactions and to register the sellers.  
+This web app was created in order create a demonstrator of the use of static analysis tools for web applications and to implement and then fix 30 vulnerabilities for Security Verification and Testing course. 
+The web application used for this puprose is based on a React front-end and an Express back-end.
+The web app aims to simulate a digital wallet in which the actors involved can exchange money (in the form of a balance loaded into each ). The actors involved are: 
+\begin{itemize}
+\item user
+\item seller
+\item admin 
+\end{itemize}
+\subsection{Functionality: Registration and Log-in}
+An unregistered or non-logged-in individual can respectively register or log in with previously chosen credentials. 
+During registration, an individual chooses:
+\begin{itemize}
+    \item username
+    \item password (minimum 4 characters)
+\end{itemize}
+
+If the individual wants to register as a seller then he must check the corresponding checkbox. At this point he have to enter: 
+\begin{itemize}
+    \item physical address of the seller (if any)
+    \item URL of his web page (if any)
+    \item A link to a pdf or xml bearing his data. In the case of an xml it must have the following form:
+     {
+\begin{lstlisting}
+<?xml version="1.0" encoding="UTF-8"?>
+<seller>
+<name> name </name>
+// ...
+</seller> 
+\end{lstlisting}
+    }
+\end{itemize}
+
+\subsection{User functionalities}
+Specifically, users can:
+\begin{itemize}
+    \item View their current balance
+    \item View their transactions and/or search them using appropriate filters.
+    \item Download the list of transactions
+    \item Accept or reject transaction requests from certain sellers. If a transaction is accepted, the amount of that transaction is deducted from the user's total credit.
+    \item Edit their information (username and password) via the Edit User Profile page.
+    \item Search for a seller to view its information
+    \item Change the theme of the web-app (white, pink, grey, orange) 
+\end{itemize}
+
+\subsection{Admin functionalities}
+
+
+In seller registration an admin can:
+\begin{itemize}
+    \item Register, delete seller accounts
+    \item Open, download, view the document uploaded by the seller
+    \item View the seller's information
+\end{itemize}
+
+In its Homepage an admin can:
+\begin{itemize}
+    \item View/delete/edit transactions
+    \item Create new transactions between a given seller and a given user. 
+\end{itemize}
+
+\subsection{Seller functionalities}
+A seller can:
+\begin{itemize}
+    \item Reload a user's wallet by entering the user's username and corresponding value
+    \item Request a payment by entering the user's username and corresponding value
+    \item View their transactions 
+\end{itemize}
+
+\subsection{Accounts already registered}
+The database is already populated in order to test the vulnerabilities entered. Specifically:
+\begin{itemize}
+    \item \textbf{seller:} hacker, \textbf{vulnerability:} Reverse Tabnabbing
+    \item \textbf{seller:}  sellerstoredxsstest, \textbf{vulnerability:} Stored XSS
+    \item \textbf{seller:}  sellertestxml
+    \item \textbf{seller:}  badactor, \textbf{vulnerability:} Code Injection 
+\end{itemize}
+The other vulnerabilities have been explained later in this paper.
 
 \section{Static Code Analysis}
 
@@ -670,7 +743,7 @@ Changing the username it is possible to gain access to any file stored in the se
 
 \subsubsection{Forced Browsing}
 \textbf{Description:} Forced browsing is an attack where the aim is to enumerate and access resources that are not referenced by the application, but are still accessible. \\ 
-\textbf{Vulnerable code:} In \texttt{authentication.js} (server), lines 72-121:
+\textbf{Vulnerable code:} In \texttt{authentication.js} (server):
 \begin{lstlisting}
 router.post("/registration", function (req, res) {
     // ...
@@ -900,7 +973,7 @@ router.post("/login", function (req, res) {
 \end{lstlisting}
 A user-entered data is inserted into the log files, compromising their integrity.
 \\ \textbf{Exploitation:} \\ A simple example would be a user logging in by entering in the username field:
-\texttt{"user\\ninfo: login success by badactor"}
+\texttt{"user\textbackslash ninfo: login success by badactor"}
 \begin{figure}[h]
 \includegraphics[width=8cm]{images/log_inj.eps}
 \centering
