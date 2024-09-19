@@ -8,6 +8,10 @@
 \usepackage{lmodern}
 \usepackage{textcomp}
 \usepackage[T1]{fontenc}
+\usepackage{array}
+
+\newcommand{\cmark}{\textbf{X}} % Definisci un segno di spunta semplice
+\newcommand{\xmark}{\textbf{O}} % Definisci un simbolo opzionale (non necessario)
 
 \setcounter{secnumdepth}{5}
 
@@ -262,8 +266,8 @@ If they match, then check the path attribute next. \\
 
 \subsubsection{Express cookie session no path}
 \textbf{Classification:} True positive. \\ 
-\textbf{Description:} Default session middleware settings: path not set. It indicates the path of the cookie; 
-use it to compare against the request path. If this and domain match, then send the cookie in the request. \\ 
+\textbf{Description:} Default session middleware settings: path not set. It indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request. 
+Note: Without a specific path, the cookie is sent for all paths on the domain.
 \textbf{Severity:} Medium. \\ 
 \textbf{Vulnerable code:} 
 \begin{itemize}
@@ -530,7 +534,6 @@ ash --source-dir . --ext py
     \item \texttt{client/src/routes/sellerRegistration.js:120}
 \end{itemize}
 
-
 \subsubsection{CSRF middleware not detected in express application}
 \textbf{Classification:} {True positive.} \\
 \textbf{Description:}  Ensure you are either using one such
@@ -616,7 +619,6 @@ ash --source-dir . --ext py
     \item \texttt{server/src/index.js}
 \end{itemize}
 
-
 \subsubsection{eval() function detected}
 \textbf{Classification:} {True positive.} \\
 \textbf{Description:} eval() can be dangerous if used to evaluate dynamic content. If this content can be input from outside the program, this may be a code injection vulnerability. Ensure evaluated content is not definable by external sources. \\ 
@@ -646,6 +648,58 @@ ash --source-dir . --ext py
     \item \texttt{server/src/routes/transactions.js:234,258}
 \end{itemize}
 
+\subsection{Weakness scan result table}
+\begin{tabular}{| m{10cm} | c | c | c |}
+\hline
+\textbf{Weakness} & \textbf{Semgrep} & \textbf{Bearer} & \textbf{ASH} \\ 
+\hline
+Unencrypted request over HTTP detected & \cmark & & \cmark \\ 
+\hline
+Missing Helmet configuration on HTTP headers & & \cmark & \\ 
+\hline
+Missing server configuration to reduce server fingerprinting & & \cmark & \\ 
+\hline
+Observable Timing Discrepancy & & \cmark & \\ 
+\hline
+Leakage of information in logger message & & \cmark & \\ 
+\hline
+Code string concatenation & \cmark & & \\ 
+\hline
+Weak symmetric mode & \cmark & & \\ 
+\hline
+Incomplete sanitization & \cmark & & \cmark \\ 
+\hline
+eval() function detected & \cmark & & \cmark \\ 
+\hline
+Unsanitized dynamic input in file path & & \cmark & \\ 
+\hline
+React dangerouslySetInnerHTML & \cmark & \cmark & \cmark \\ 
+\hline
+Unsanitized user input in deserialization method & \cmark & \cmark & \cmark \\ 
+\hline
+Express cookie session default name & \cmark & & \cmark \\ 
+\hline
+Express cookie session no secure & \cmark & \cmark & \cmark \\ 
+\hline
+Express cookie session no httponly & \cmark & \cmark & \cmark \\ 
+\hline
+Express cookie session no domain & \cmark & & \cmark \\ 
+\hline
+Express cookie session no path & \cmark & & \cmark \\ 
+\hline
+Express cookie session no expires & \cmark & & \cmark \\ 
+\hline
+Express check directory listing & \cmark & \cmark & \cmark \\ 
+\hline
+Express check csurf middleware usage & \cmark & & \cmark \\ 
+\hline
+Unsanitized input in NoSQL query & & \cmark & \\ 
+\hline
+Usage of default cookie configuration & & \cmark & \\ 
+\hline
+Usage of default session cookie configuration & & \cmark & \\ 
+\hline
+\end{tabular}
 
 
 \newpage
@@ -1109,9 +1163,7 @@ The most effective way to avoid DOM-based JavaScript injection vulnerabilities i
 
 \paragraph{Reflected Cross-Site Scripting}
 
-Reflected Cross-Site Scripting (XSS) is the simplest form of XSS attack. Unlike Stored XSS, where the malicious script is stored on the server, Reflected XSS occurs when a malicious script is reflected off a web application onto the user's browser. The victim of the attack is not the website itself, but a client of that website. This vulnerability is due to improper handling of untrusted inputs.
-
-In Reflected XSS attacks, an attacker crafts a malicious URL containing the script. When a user clicks on this URL, the script is executed in the context of the user's session, potentially leaking sensitive information like cookies, which are only accessible from within the website.
+Reflected Cross-Site Scripting (XSS) occurs when user input is reflected in the server's response without proper validation. For example, an attacker might craft a malicious search URL containing a script. The server processes the request without sanitizing the input, and the frontend displays a message like "You are searching for XYZ," where "XYZ" is the malicious script. The browser then executes the script, potentially exposing sensitive data. Reflected XSS, also known as Non-Persistent XSS, happens in a single request-response cycle.
 
 \textbf{Vulnerable code:}
 Consider the situation where users can search for sellers by username. The vulnerable React code in \texttt{routes/locatorPage.js} retrieves the seller's username from the URL query parameter \texttt{sellerUsername} and displays it using the \texttt{dangerouslySetInnerHTML} property.
@@ -1470,7 +1522,7 @@ The attack is also possible for link opened via the window.open javascript funct
 </html>
 \end{lstlisting}
 For simplicity, we chose to insert a link that redirects to an image with a message rather than a phishing page.
-\\ \textbf{Mitigation:} To mitigate this vulnerability, simply use \texttt{rel="noopener"} or \texttt{rel="noreferrer"} instead of \texttt{rel="opener"}. Using \texttt{rel="noreferrer"} also implies \texttt{rel="noopener"}, so if you have chosen to use \texttt{rel="noreferrer"}, the use of \texttt{rel="noopener"} isn’t required.
+\\ \textbf{Mitigation:} To mitigate this vulnerability, simply use \texttt{rel="noopener"} or \texttt{rel="noreferrer"} instead of \texttt{rel="opener"}. Using \texttt{rel="noreferrer"} implicitly sets also \texttt{rel="noopener"}, so if you have chosen to use \texttt{rel="noreferrer"}, the use of \texttt{rel="noopener"} isn’t required.
 
 \subsection{Vulnerable and Outdated Components}
 
