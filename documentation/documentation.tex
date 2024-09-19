@@ -187,7 +187,9 @@ $ docker run -e SEMGREP_APP_TOKEN=<TOKEN> --rm -v "${PWD}:/src" semgrep/semgrep 
 \item Go to your app's root directory and run \texttt{semgrep ci --code}. This will scan your project to check for vulnerabilities in your source code.
 \end{enumerate}
 
-\subsubsection{React insecure request}
+\subsubsection{Vulnerable web-app analysis}
+
+\paragraph{React insecure request} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cleartext_transmission_of_sensitive_information]{True positive.} \\ 
 \textbf{Description:} Unencrypted request over HTTP detected. \\ 
 \textbf{Severity:} High. \\ 
@@ -198,7 +200,7 @@ $ docker run -e SEMGREP_APP_TOKEN=<TOKEN> --rm -v "${PWD}:/src" semgrep/semgrep 
     \item \texttt{client/src/api/users.js:3-23-45-67}
 \end{itemize}
 
-\subsubsection{Code string concat}
+\paragraph{Code string concat} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_neutralization_of_directives_in_dynamically_evaluated_code]{True positive.} \\ 
 \textbf{Description:} Found data from an Express or Next web request flowing to eval. If this data is user-controllable this can 
 lead to execution of arbitrary system commands in the context of your application process. Avoid eval whenever possible. \\ 
@@ -208,7 +210,7 @@ lead to execution of arbitrary system commands in the context of your applicatio
     \item server/src/routes/authentication.js:69
 \end{itemize}
 
-\subsubsection{Weak symmetric mode}
+\paragraph{Weak symmetric mode} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:use_of_a_broken_or_risky_cryptographic_algorithm]{True positive.} \\ 
 \textbf{Description:} Detected the use of createCipheriv("aes-128-ecb") which is considered a weak cryptographic mode. Where possible, 
 leverage the industry standard recommendation which is to use a block cipher such as AES with at least 128-bit strength, an example 
@@ -220,7 +222,7 @@ of a secure algorithm is AES-256-GCM. If your company has its own guidelines, yo
     \item server/src/crypto.js:28
 \end{itemize}
 
-\subsubsection{Incomplete sanitization}
+\paragraph{Incomplete sanitization} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_limitation_of_a_pathname_to_a_restricted_directory]{True positive.} \\ 
 \textbf{Description:} username.replace method will only replace the first occurrence when used with a string argument ("). 
 If this method is used for escaping of dangerous data then there is a possibility for a bypass. Try to use sanitization 
@@ -231,7 +233,7 @@ library instead or use a Regex with a global flag. \\
     \item server/src/routes/transactions.js:234-258
 \end{itemize}
 
-\subsubsection{Eval detected}
+\paragraph{Eval detected} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_neutralization_of_directives_in_dynamically_evaluated_code]{True positive.} \\ 
 \textbf{Description:} Detected the use of eval(). eval() can be dangerous if used to evaluate dynamic content. If this 
 content can be input from outside the program, this may be a code injection vulnerability. Ensure evaluated content is 
@@ -242,7 +244,7 @@ not definable by external sources. \\
     \item server/src/routes/authentication.js:69
 \end{itemize}
 
-\subsubsection{Express cookie session default name}
+\paragraph{Express cookie session default name} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\ 
 \textbf{Description:} Don't use the default session cookie name Using the default session cookie name can open your 
 app to attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to fingerprint 
@@ -253,7 +255,7 @@ the server and target attacks accordingly. \\
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{Express cookie session no secure}
+\paragraph{Express cookie session no secure} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{True positive.} \\ 
 \textbf{Description:} Default session middleware settings: secure not set. It ensures the browser only
  sends the cookie over HTTPS. \\ 
@@ -263,7 +265,7 @@ the server and target attacks accordingly. \\
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{Express cookie session no httponly}
+\paragraph{Express cookie session no httponly} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cross_site_scripting]{True positive.} \\ 
 \textbf{Description:} Default session middleware settings: httpOnly not set. It ensures the cookie is sent 
 only over HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks. \\ 
@@ -273,7 +275,7 @@ only over HTTP(S), not client JavaScript, helping to protect against cross-site 
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{Express cookie session no domain}
+\paragraph{Express cookie session no domain} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\ 
 \textbf{Description:} Default session middleware settings: domain not set. It indicates the domain of 
 the cookie; use it to compare against the domain of the server in which the URL is being requested. 
@@ -284,7 +286,7 @@ If they match, then check the path attribute next. \\
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{Express cookie session no path}
+\paragraph{Express cookie session no path} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\ 
 \textbf{Description:} Default session middleware settings: path not set. It indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request. 
 Note: Without a specific path, the cookie is sent for all paths on the domain.
@@ -294,7 +296,7 @@ Note: Without a specific path, the cookie is sent for all paths on the domain.
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{Express cookie session no expires}
+\paragraph{Express cookie session no expires} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\ 
 \textbf{Description:}  Default session middleware settings: expires not set. Use it to set expiration date for persistent cookies. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -303,7 +305,7 @@ Note: Without a specific path, the cookie is sent for all paths on the domain.
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{React dangerouslysetinnerhtml}
+\paragraph{React dangerouslysetinnerhtml} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[par:stored_xss]{True positive.} \\ 
 \textbf{Description:} Detection of dangerouslySetInnerHTML from non-constant definition. This can 
 inadvertently expose users to cross-site scripting (XSS) attacks if this comes from user-provided
@@ -315,7 +317,7 @@ DOMPurify to sanitize your HTML. \\
     \item client/src/routes/sellerRegistration.js:120
 \end{itemize}
 
-\subsubsection{Express third party object deserialization}
+\paragraph{Express third party object deserialization} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:deserialization_of_untrusted_data]{True positive.} \\ 
 \textbf{Description:} The following function call $SER.$FUNC accepts user controlled data which 
 can result in Remote Code Execution (RCE) through Object Deserialization. It is recommended to 
@@ -326,7 +328,7 @@ use secure data processing alternatives such as JSON.parse() and Buffer.from(). 
     \item server/src/routes/transactions.js:67
 \end{itemize}
 
-\subsubsection{Express check directory listing}
+\paragraph{Express check directory listing} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:exposure_of_information_through_directory_listing]{True positive.} \\ 
 \textbf{Description:} Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories 
 and files. It is recommended to disable directory listing unless it is a public resource. If you need directory listing, 
@@ -337,7 +339,7 @@ ensure that sensitive files are inaccessible when querying the resource. \\
     \item server/src/index.js:53
 \end{itemize}
 
-\subsubsection{Express check csurf middleware usage}
+\paragraph{Express check csurf middleware usage} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:csrf_with_samesite_none_misconfiguration]{True positive.} \\ 
 \textbf{Description:} A CSRF middleware was not detected in your express application. Ensure you are either using 
 one such as csurf or csrf (see rule references) and/or you are properly doing CSRF validation in your routes with 
@@ -351,7 +353,7 @@ a token or cookies.\\
 \subsection{Bearer CLI}
 Bearer CLI is a free, open-source command-line tool that scans source code for security vulnerabilities and privacy risks. Supporting languages like JavaScript, Ruby, and Python, it uses static analysis to detect issues from the OWASP Top 10 and CWE Top 25, prioritizing based on the impact on sensitive data. It provides detailed security and privacy reports to help developers quickly address critical issues.
 
-\subsubsection{Unsanitized input in NoSQL query}
+\paragraph{Unsanitized input in NoSQL query} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Using unsanitized data in NoSQL queries exposes your application to NoSQL injection attacks. This vulnerability arises when user input, request data, or any externally influenced data is directly passed into a NoSQL query function without proper sanitization. \\
 \textbf{Severity:} Critical. \\ 
@@ -364,7 +366,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
 \end{itemize}
 \textbf{Note:} Bearer CLI for some reason sees sqlite queries as nosql, but the weakness is correct.
 
-\subsubsection{Unsanitized user input in deserialization method}
+\paragraph{Unsanitized user input in deserialization method} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:deserialization_of_untrusted_data]{True positive.} \\
 \textbf{Description:} Deserializing untrusted data exposes your application to security risks. This vulnerability occurs when data, especially from external sources like request objects, is deserialized without proper sanitization. Attackers can embed malicious code or payloads in serialized data, compromising your application's security upon deserialization. \\ 
 \textbf{Severity:} Critical. \\ 
@@ -373,7 +375,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/routes/transactions.js:67}
 \end{itemize}
 
-\subsubsection{Unsanitized dynamic input in file path}
+\paragraph{Unsanitized dynamic input in file path} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_limitation_of_a_pathname_to_a_restricted_directory]{True positive.} \\
 \textbf{Description:} Using unsanitized dynamic input to determine file paths can allow attackers to gain access to files and folders outside of the intended scope. This vulnerability occurs when input provided by users is directly used to access the filesystem without proper validation or sanitization. \\ 
 \textbf{Severity:} High. \\ 
@@ -383,7 +385,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/routes/transactions.js:258}
 \end{itemize}
 
-\subsubsection{Unsanitized user input in React inner HTML method (XSS)}
+\paragraph{Unsanitized user input in React inner HTML method (XSS)} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cross_site_scripting]{True positive.} \\
 \textbf{Description:} Using React's dangerouslySetInnerHTML with unsanitized data can introduce Cross-Site Scripting (XSS) vulnerabilities. This occurs when external input is embedded directly into the HTML without proper sanitization, allowing attackers to inject malicious scripts. \\ 
 \textbf{Severity:} High. \\ 
@@ -394,7 +396,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
 \end{itemize}
 \textbf{Note:} The tool is not able to detect the DOM XSS vulnerable code in 'client/src/routes/changeTheme.js:48'. \\
 
-\subsubsection{Missing HTTP Only option in cookie configuration}
+\paragraph{Missing HTTP Only option in cookie configuration} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{True positive.} \\
 \textbf{Description:} Your cookies are at risk if the HTTP Only option is not configured. This setting prevents client-side JavaScript, such as the code that reads ``document.cookie'' values, from accessing the cookie's value. Enabling this option is crucial for websites prone to Cross-Site Scripting (XSS) attacks, because it prevents malicious scripts from obtaining the cookie's data. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -403,7 +405,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:30}
 \end{itemize}
 
-\subsubsection{Usage of default cookie configuration}
+\paragraph{Usage of default cookie configuration} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Using default cookie configurations can expose your application to security risks. This vulnerability arises when cookies are set with their default values, making them predictable and easier to exploit. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -412,7 +414,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:39}
 \end{itemize}
 
-\subsubsection{Usage of default session cookie configuration}
+\paragraph{Usage of default session cookie configuration} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Using default session cookie configurations can expose your application to security vulnerabilities. This vulnerability arises when session cookies are set with their default values, making them predictable and easier to exploit. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -421,7 +423,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:30}
 \end{itemize}
 
-\subsubsection{Missing Helmet configuration on HTTP headers}
+\paragraph{Missing Helmet configuration on HTTP headers} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Helmet can help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately. Failing to configure Helmet for HTTP headers leaves your application vulnerable to several web attacks. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -430,7 +432,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:16}
 \end{itemize}
 
-\subsubsection{Missing Secure option in cookie configuration}
+\paragraph{Missing Secure option in cookie configuration} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{True positive.} \\
 \textbf{Description:} When a cookie lacks the Secure attribute, it can be transmitted over an unencrypted connection, making it vulnerable to interception by unauthorized parties. Enabling the Secure option ensures that cookies are only sent over HTTPS, enhancing the security of data in transit. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -439,7 +441,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:30}
 \end{itemize}
 
-\subsubsection{Missing server configuration to reduce server fingerprinting}
+\paragraph{Missing server configuration to reduce server fingerprinting} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Reducing server fingerprinting enhances security by making it harder for attackers to identify the software your server is running. Server fingerprinting involves analyzing the unique responses of server software to specific requests, which can reveal information about the server's software and version. While not a direct security vulnerability, minimizing this information leakage is a proactive step to obscure details that could be used in targeted attacks. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -448,7 +450,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:16}
 \end{itemize}
 
-\subsubsection{Observable Timing Discrepancy}
+\paragraph{Observable Timing Discrepancy} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Observable Timing Discrepancy occurs when the time it takes for certain operations to complete can be measured and observed by attackers. This vulnerability is particularly concerning when operations involve sensitive information, such as password checks or secret comparisons. If attackers can analyze how long these operations take, they might be able to deduce confidential details, putting your data at risk. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -457,7 +459,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{client/src/routes/editUserProfile.js:60}
 \end{itemize}
 
-\subsubsection{Missing access restriction on directory listing}
+\paragraph{Missing access restriction on directory listing} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:exposure_of_information_through_directory_listing]{True positive.} \\
 \textbf{Description:} Exposing a directory listing without restrictions can lead to unauthorized access to sensitive data or source code. This vulnerability occurs when the file structure of a server or application is made visible to users without proper access control, potentially allowing attackers to exploit the exposed file structure. \\ 
 \textbf{Severity:} Low. \\ 
@@ -466,7 +468,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:53}
 \end{itemize}
 
-\subsubsection{Leakage of information in logger message}
+\paragraph{Leakage of information in logger message} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Information leakage through logger messages can compromise sensitive data. This vulnerability arises when dynamic data or variables, which may contain sensitive information, are included in log messages. \\ 
 \textbf{Severity:} Low. \\ 
@@ -476,6 +478,28 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{client/src/routes/homeUser.js:111,124}
     \item \texttt{client/src/routes/locatorPage.js:34}
 \end{itemize}
+
+\subsubsection{Secure web-app analysis}
+
+\paragraph{Express Check Csurf Middleware Usage} \mbox{} \\ \\
+\textbf{Classification:} False positive. \\
+\textbf{Description:} A CSRF middleware was not detected in your express application. Ensure you are either using one such as csurf or csrf (see rule references) and/or you are properly doing CSRF validation in your routes with a token or cookies. \\ 
+\textbf{Severity:} Low. \\ 
+\textbf{Vulnerable code:}
+\begin{itemize}
+    \item \texttt{server/src/index.js:17}
+\end{itemize}
+
+\paragraph{Path Join Resolve Traversal} \mbox{} \\ \\
+\textbf{Classification:} False positive. \texttt{path.join} does not receive a user input. \\
+\textbf{Description:} Detected possible user input going into a path.join or path.resolve function. This could possibly lead to a path traversal vulnerability, where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first. \\ 
+\textbf{Severity:} Medium. \\ 
+\textbf{Vulnerable code:}
+\begin{itemize}
+    \item \texttt{server/src/index.js:234-257}
+\end{itemize}
+
+
 
 \subsection{Automated Security Helper - ASH}
 The security helper tool was created to help you reduce the probability of a security violation in a new code, infrastructure or IAM configuration by providing a fast and easy tool to conduct preliminary security check as early as possible within your development process.

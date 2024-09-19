@@ -56,6 +56,7 @@ app.use(
             domain: "localhost", 
             path: "/", 
             maxAge: 90000000,
+            expires: new Date().getTime() + 90000000,
             sameSite: "strict"
         }
     })
