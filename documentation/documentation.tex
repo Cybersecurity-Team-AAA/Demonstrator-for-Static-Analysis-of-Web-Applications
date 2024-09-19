@@ -163,6 +163,26 @@ The other vulnerabilities have been explained later in this paper.
 Semgrep is an open-source static analysis engine for finding bugs, detecting vulnerabilities in third-party dependencies, 
 and enforcing code standards. It also allows to define custom rules to analyse the code. 
 
+\subsubsection{How to configure}
+ 
+\begin{enumerate}
+\item Install Semgrep CLI
+\begin{lstlisting}[numbers=none]
+For macOS
+$ brew install semgrep
+
+For Ubuntu/WSL/Linux/macOS
+$ python3 -m pip install semgrep
+
+To try Semgrep without installation run via Docker
+$ docker run -it -v "${PWD}:/src" semgrep/semgrep semgrep login
+$ docker run -e SEMGREP_APP_TOKEN=<TOKEN> --rm -v "${PWD}:/src" semgrep/semgrep semgrep ci
+\end{lstlisting}
+\item Run \texttt{semgrep login} to create your account and login to Semgrep. 
+\item Run \texttt{export SEMGREP\_REPO\_URL=REPO\_URL}
+\item Go to your app's root directory and run \texttt{semgrep ci --code}. This will scan your project to check for vulnerabilities in your source code.
+\end{enumerate}
+
 \subsubsection{React insecure request}
 \textbf{Classification:} \hyperref[subsubsec:cleartext_transmission_of_sensitive_information]{True positive.} \\ 
 \textbf{Description:} Unencrypted request over HTTP detected. \\ 
@@ -457,17 +477,17 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
 The security helper tool was created to help you reduce the probability of a security violation in a new code, infrastructure or IAM configuration by providing a fast and easy tool to conduct preliminary security check as early as possible within your development process.
 
 \subsubsection{How to configure}
-\paragraph{Prerequisites} 
+\paragraph{Prerequisites} \mbox{} \\ \\
 To start using ash you have to install and configure the following:
 \begin{itemize}
 \item Windows Subsystem for Linux (WSL) on Windows 
 \item Tools installed to run Linux containers, such as Finch, Rancher Desktop, Podman Desktop, or Docker Desktop.
 \end{itemize}
 
-\paragraph{Getting Started - Linux or MacOS} 
+\paragraph{Getting Started - Linux or MacOS} \mbox{} \\ \\
 Clone the git repository into a folder. For example:
 
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 Set up some variables
 REPO_DIR="${HOME}"/Documents/repos/reference
 REPO_NAME=automated-security-helper
@@ -491,9 +511,9 @@ Execute the ash tool
 ash --version
 \end{lstlisting}
 
-\paragraph{Examples}
+\paragraph{Examples} \mbox{} \\ \\
 Here's some examples:
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 Getting help
 ash -h
 
