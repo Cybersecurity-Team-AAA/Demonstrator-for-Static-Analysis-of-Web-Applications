@@ -1,7 +1,7 @@
 # Demonstrator-for-Static-Analysis-of-Web-Applications
 Project for the Security Verification and Testing course of Politecnico di Torino
 
-## Foldera structure
+## Folders structure
 - documentation: contains the description of the projet, including the static analysis tools report
 - exploits: contains the script used to execute the exploits
 - web-app-secure: contains the source code of the secure web applications
