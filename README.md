@@ -64,7 +64,7 @@ npm start
 #in web-app-secure/client
 npm start
 ```
-To do only the first start: <br/>
+To do only the first start of the secure webapp: <br/>
 - Navigate to https://localhost:3001/ <br/>
 - Click advanced
-- Click accept the risk and continue
+- Click accept the risk and continue. This way we have accepted the self-signed certificate.
