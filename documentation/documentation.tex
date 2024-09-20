@@ -167,7 +167,9 @@ The other vulnerabilities have been explained later in this paper.
 
 \subsection{Semgrep}
 Semgrep is an open-source static analysis engine for finding bugs, detecting vulnerabilities in third-party dependencies, 
-and enforcing code standards. It also allows to define custom rules to analyse the code. 
+and enforcing code standards. It also allows to define custom rules to analyse the code.\\
+More info here: \footnotesize\url{https://github.com/semgrep/semgrep}
+\normalsize
 
 \subsubsection{How to configure}
  
@@ -373,7 +375,27 @@ a token or cookies.\\
 \end{itemize}
 
 \subsection{Bearer CLI}
-Bearer CLI is a free, open-source command-line tool that scans source code for security vulnerabilities and privacy risks. Supporting languages like JavaScript, Ruby, and Python, it uses static analysis to detect issues from the OWASP Top 10 and CWE Top 25, prioritizing based on the impact on sensitive data. It provides detailed security and privacy reports to help developers quickly address critical issues.
+Bearer CLI is a free, open-source command-line tool that scans source code for security vulnerabilities and privacy risks. Supporting languages like JavaScript, Ruby, and Python, it uses static analysis to detect issues from the OWASP Top 10 and CWE Top 25, prioritizing based on the impact on sensitive data. It provides detailed security and privacy reports to help developers quickly address critical issues.\\
+More info here: \footnotesize\url{https://docs.bearer.com/explanations/scanners/}
+\normalsize
+
+\subsubsection{How to configure}
+
+\paragraph{Installation} \mbox{} \\ \\
+Install Bearer CLI using the following command:
+\begin{lstlisting}[numbers=none]
+curl -sfL https://raw.githubusercontent.com/Bearer/bearer/main/contrib/install.sh | sh
+\end{lstlisting}
+Alternative installation methods include Homebrew, Docker, and binary installation.
+
+\paragraph{Running a Scan} \mbox{} \\ \\
+To scan a project, clone an example or use your own:
+\begin{lstlisting}[numbers=none]
+git clone https://github.com/juice-shop/juice-shop.git
+bearer scan juice-shop
+\end{lstlisting}
+This will run a scan with default built-in rules. You can also create custom rules.
+The scan produces a security report detailing rule violations, file paths, and line numbers. The report includes findings categorized by severity (Critical, High, Medium, Low) with details on each issue.
 
 \paragraph{Unsanitized input in NoSQL query} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
@@ -502,7 +524,9 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
 \end{itemize}
 
 \subsection{Automated Security Helper - ASH}
-The security helper tool was created to help you reduce the probability of a security violation in a new code, infrastructure or IAM configuration by providing a fast and easy tool to conduct preliminary security check as early as possible within your development process.
+The security helper tool was created to help you reduce the probability of a security violation in a new code, infrastructure or IAM configuration by providing a fast and easy tool to conduct preliminary security check as early as possible within your development process. \\
+More info here: \footnotesize\url{https://github.com/awslabs/automated-security-helper}
+\normalsize
 
 \subsubsection{How to configure}
 \paragraph{Prerequisites} \mbox{} \\ \\
