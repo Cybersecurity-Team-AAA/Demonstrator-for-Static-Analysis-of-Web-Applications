@@ -627,7 +627,8 @@ Force run scan for Python code
 ash --source-dir . --ext py
 \end{lstlisting}
 
-\subsubsection{Unencrypted request over HTTP detected}
+\subsubsection{Vulnerable Web-App Analysis}
+\paragraph{Unencrypted request over HTTP detected} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cleartext_transmission_of_sensitive_information]{\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:}  The application allows users to connect to it over unencrypted connections. An attacker suitably positioned to view a legitimate user's network traffic could record and monitor their interactions with the application and obtain any information the user supplies. \\ 
 \textbf{Severity:}  High \\ 
@@ -638,7 +639,7 @@ ash --source-dir . --ext py
     \item \texttt{client/src/api/users.js}
 \end{itemize}
 
-\subsubsection{Detection of dangerouslySetInnerHTML from non-constant definition}
+\paragraph{Detection of dangerouslySetInnerHTML from non-constant definition} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[par:stored_xss]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} This can inadvertently expose users to cross-site scripting (XSS) attacks if this comes from user-provided input. If dangerouslySetInnerHTML is needed, a sanitization library such as DOMPurify to sanitize the HTML is suggested. \\ 
 \textbf{Severity:}  Medium \\ 
@@ -647,7 +648,7 @@ ash --source-dir . --ext py
     \item \texttt{client/src/routes/sellerRegistration.js:120}
 \end{itemize}
 
-\subsubsection{CSRF middleware not detected in express application}
+\paragraph{CSRF middleware not detected in express application}  \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:csrf_with_samesite_none_misconfiguration]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:}  Ensure you are either using one such
           as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your    
@@ -659,7 +660,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 
-\subsubsection{Default session cookie name}
+\paragraph{Default session cookie name}  \mbox{} \\ \\
 \textbf{Classification:} {\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} Using the default session cookie name can open your app to
           attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to    
@@ -671,7 +672,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 
-\subsubsection{Default session settings: domain not set}
+\paragraph{Default session settings: domain not set}  \mbox{} \\ \\
 \textbf{Classification:} {\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} It indicates the domain of the cookie; use it
           to compare against the domain of the server in which the URL is being requested. If they match, then
@@ -682,7 +683,7 @@ ash --source-dir . --ext py
     \item \texttt{server/src/index.js}
 \end{itemize}
 
-\subsubsection{Default session settings: expires not set}
+\paragraph{Default session settings: expires not set} \mbox{} \\ \\
 \textbf{Classification:} {\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} Use it to set expiration date for persistent cookies. \\
 \textbf{Severity:}  Medium\\ 
@@ -692,7 +693,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 
-\subsubsection{Default session settings: no-httponly}
+\paragraph{Default session settings: no-httponly} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cross_site_scripting]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} httpOnly not set. It ensures the cookie is sent only over
           HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks. \\
@@ -703,7 +704,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 
-\subsubsection{Default session settings: path not set}
+\paragraph{Default session settings: path not set} \mbox{} \\ \\
 \textbf{Classification:} {\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} It indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request.\\
 \textbf{Severity:}  Medium\\ 
@@ -712,7 +713,7 @@ ash --source-dir . --ext py
     \item \texttt{server/src/index.js}
 \end{itemize}
 
-\subsubsection{Default session settings: secure not set}
+\paragraph{Default session settings: secure not set} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} It ensures the browser only sends the cookie over HTTPS. \\
 \textbf{Severity:}  Medium\\ 
@@ -721,7 +722,7 @@ ash --source-dir . --ext py
     \item \texttt{server/src/index.js}
 \end{itemize}
 
-\subsubsection{Directory listing/indexing enabled}
+\paragraph{Directory listing/indexing enabled} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:exposure_of_information_through_directory_listing]{\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and 
           files. It is recommended to disable directory listing unless it is a public resource. If you need
@@ -729,10 +730,10 @@ ash --source-dir . --ext py
 \textbf{Severity:}  Medium\\ 
 \textbf{Vulnerable code:}
 \begin{itemize}
-    \item \texttt{server/src/index.js}
+    \item \texttt{server/src/index.js:53}
 \end{itemize}
 
-\subsubsection{eval() function detected}
+\paragraph{eval() function detected} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_neutralization_of_directives_in_dynamically_evaluated_code]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} eval() can be dangerous if used to evaluate dynamic content. If this content can be input from outside the program, this may be a code injection vulnerability. Ensure evaluated content is not definable by external sources. \\ 
 \textbf{Severity:} Medium \\ 
@@ -741,7 +742,7 @@ ash --source-dir . --ext py
     \item \texttt{server/src/routes/authentication.js:69}
 \end{itemize}
 
-\subsubsection{Third party object deserialization}
+\paragraph{Third party object deserialization} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:deserialization_of_untrusted_data]{\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} The following function call \texttt{node\_serialize.unserialize} accepts user controlled data which can result in Remote Code Execution (RCE) through Object Deserialization. It is recommended to use secure data processing alternatives such as JSON.parse() and Buffer.from() \\ 
 \textbf{Severity:} Medium \\ 
@@ -750,7 +751,7 @@ ash --source-dir . --ext py
     \item \texttt{server/src/routes/transactions.js:67}
 \end{itemize}
 
-\subsubsection{Incomplete sanitization}
+\paragraph{Incomplete sanitization} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_limitation_of_a_pathname_to_a_restricted_directory]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} \texttt{req.session.user.username.replace} method will only replace the first occurrence when used with a  
           string argument ("\textbackslash n"). If this method is used for escaping of dangerous data then there is a       
@@ -760,6 +761,26 @@ ash --source-dir . --ext py
 \begin{itemize}
     \item \texttt{server/src/routes/transactions.js:234,258}
 \end{itemize}
+
+\subsubsection{Secure Web-App Analysis}
+\paragraph{Express check csurf middleware usage} \mbox{} \\ \\
+\textbf{Classification:} False Positive. Samesite policy is set to "strict" to avoid sending cookies in cross site requests but it is needed to pay attention to malicious subdomains.
+\\ \textbf{Description:} A CSRF middleware was not detected. Ensure you are either using one such as csurf or csrf and/or you are properly doing CSRF validation.
+\\ \textbf{Severity:} Low
+\\ \textbf{Vulnerable Code:}
+\begin{itemize}
+    \item \texttt{/src/server/src/index.js:17}
+\end{itemize}
+
+\paragraph{Path join resolve traversal} \mbox{} \\ \\
+\textbf{Classification:} False Positive. \texttt{path.join} does not receive a user input.
+\\ \textbf{Description:} Detected possible user input going into a path.join or path.resolve function.
+\\ \textbf{Severity:} Medium
+\\ \textbf{Vulnerable Code:}
+\begin{itemize}
+    \item \texttt{/src/server/src/routes/transactions.js:234-257}
+\end{itemize}
+
 
 \subsection{Weakness scan result table}
 \begin{center}
