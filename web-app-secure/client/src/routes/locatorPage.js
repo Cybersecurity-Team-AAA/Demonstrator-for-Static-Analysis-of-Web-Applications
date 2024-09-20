@@ -31,7 +31,7 @@ export default function LocatorPage() {
             setSellersFound(sellers);
             setError('');
         } catch (exc) {
-            console.error(exc);
+            // console.error(exc);
             setError('Error, the regex may be invalid. If you are using a combined regex, put the single strings in quotes.');
         }
     };

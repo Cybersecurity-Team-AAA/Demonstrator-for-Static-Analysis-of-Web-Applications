@@ -19,6 +19,7 @@
     "express-rate-limit": "^7.4.0",
     "express-session": "^1.18.0",
     "fs": "^0.0.1-security",
+    "helmet": "^7.1.0",
     "isolated-vm": "^5.0.1",
     "libxmljs": "^1.0.11",
     "micromatch": "^4.0.4",

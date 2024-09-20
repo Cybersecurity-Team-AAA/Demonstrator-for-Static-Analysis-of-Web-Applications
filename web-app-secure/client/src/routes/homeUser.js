@@ -108,7 +108,7 @@ function HomeUser() {
             setTransactions(value)
         })
             .catch((err) => {
-                console.error(err)
+                // console.error(err)
             })
     }, [])
 
@@ -121,7 +121,7 @@ function HomeUser() {
             setTransactions((p) => p.map(it => it.id === transactionId ? { ...it, pending_state: "false" } : it))
             updateBalance(new_user.balance);
         } catch (err) {
-            console.error(err)
+            // console.error(err)
             if (err.message) {
                 setModal((it) => ({
                     ...it,

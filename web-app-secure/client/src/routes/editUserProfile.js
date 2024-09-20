@@ -44,7 +44,7 @@ function EditUserProfile() {
                 if (exc.status === 404) setShowPopup("notfound");
                 else if (exc.status === 401) setShowPopup("unauth");
 
-                console.error("fetching user error", exc);
+                // console.error("fetching user error", exc);
             }
             finally {
                 setLoaded(true);
@@ -54,7 +54,7 @@ function EditUserProfile() {
             navigate("/")
         }
         else if (user.id != userId) {
-            console.log("Redirecting bad actor to its own homepage", user, userId)
+            // console.log("Redirecting bad actor to its own homepage", user, userId)
             navigate(`/${user.role}/homepage`)
         }
         else {

@@ -150,14 +150,21 @@ router.put("/user/:id", async function (req, res) {
         winston.warn("missing fields on user update", { body: req.body });
         return res.status(400).send();
     }
+    
+    // Verifica che l'utente stia modificando solo il proprio account
+    if (req.params.id !== req.session.user.id.toString()) {
+        return res.status(401).send({ msg: "Unauthorized: You can only update your own account" });
+    }
+    
     try {
         await dbapi.checkCredentials(req.session.user.username, req.body.currentPassword)
     }
     catch {
-        return res.status(401).send({ msg: "Unauthorized" })
+        return res.status(401).send({ msg: "Unauthorized: Wrong credentials" })
     }
+    
     try {
-        await dbapi.updateUser(req.params.id, req.body.username, req.body.currentPassword, req.body.password)
+        await dbapi.updateUser(req.params.id, req.session.user.username, req.body.currentPassword, req.body.password)
         res.status(200).send();
     } catch (err) {
         res.status(500).send();

@@ -74,8 +74,8 @@ function SellerRegistration() {
     }
 
     const handleDocumentPreview = (documentData, filename) => {
-        console.log("Preview data:", documentData.slice(0, 100));
-        console.log("Filename:", filename);
+        // console.log("Preview data:", documentData.slice(0, 100));
+        // console.log("Filename:", filename);
         setPreviewDocument(documentData);
         setIsPDF(filename.toLowerCase().endsWith('.pdf'));
         setShowPreview(true);
