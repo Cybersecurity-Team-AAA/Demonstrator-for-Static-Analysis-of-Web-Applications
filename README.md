@@ -1,11 +1,18 @@
 # Demonstrator-for-Static-Analysis-of-Web-Applications
 Project for the Security Verification and Testing course of Politecnico di Torino
 
-# Requirements
+## Folder structure
+- documentation: contains the description of the projet, including the static analysis tools report
+- exploits: contains the script used to execute the exploits
+- web-app-secure: contains the source code of the secure web applications
+- web-app-vulnerable: contains the source code of the vulnerable web applications
+
+
+## Requirements
 - Ubuntu 20.04.5 LTS
 - Firefox Browser
 
-# Installation
+## Installation
 1. Install npm
 ```
 sudo apt install npm
@@ -41,7 +48,7 @@ sudo npm install
 sudo npm install
 ```
 
-# Start the vulnerable web application
+## Start the vulnerable web application
 ```
 # Run in web-app-vulnerable/server
 npm start
@@ -49,7 +56,7 @@ npm start
 # Run in web-app-vulnerable/client
 npm start
 ```
-# Start the secure web application 
+## Start the secure web application 
 ```
 # Run in web-app-secure/server
 npm start
