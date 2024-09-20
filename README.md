@@ -25,7 +25,7 @@ sudo apt install curl
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 ```
-4. Restart the terminal
+4. Update the bash PATHs
 ```
 source .bashrc
 ```
