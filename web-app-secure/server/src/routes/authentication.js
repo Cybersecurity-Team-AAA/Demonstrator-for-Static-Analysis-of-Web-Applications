@@ -101,12 +101,31 @@ router.post("/registration", function (req, res) {
         } else if (req.body.xmlContent) {
             try {
                 const xml = req.body.xmlContent;
-                const libxmljs = require('libxmljs');
-                const doc = libxmljs.parseXml(xml, { replaceEntities: false, dtdload: false, nonet: true });
-                const sellerName = doc.get('//seller/name').text();
+                // const { XMLParser, XMLValidator } = require('fast-xml-parser');
+                const { XMLParser } = require('fast-xml-parser');
+                
+                // // Validate XML
+                // if (!XMLValidator.validate(xml)) {
+                //     throw new Error('Invalid XML');
+                // }
+
+                const parser = new XMLParser({
+                    ignoreAttributes: false,    // Mantieni gli attributi se presenti
+                    parseAttributeValue: true,      // Abilita la conversione di numeri/booleani
+                    allowBooleanAttributes: true    // Permetti attributi booleani
+                });
+                const jsonObj = parser.parse(xml);
+
+                
+                // if (!jsonObj.seller || !jsonObj.seller.name) {
+                //     throw new Error('Missing seller or name tag');
+                // }
+
+                const sellerName = jsonObj.seller.name;
+                
                 dbapi.addSeller(req.body.username, req.body.password, req.body.address, "seller", "true", req.body.webpage, req.body.filename, req.body.xmlContent)
                     .then(() => {
-                        res.status(201).send(JSON.stringify({ "sellerName": sellerName }));  // oops. make sure parsing is not vuln
+                        res.status(201).send(JSON.stringify({ "sellerName": sellerName }));
                     })
             } catch {
                 console.log("fail in xml processing, maybe seller tag or name tag is missing")

@@ -1498,18 +1498,28 @@ else if(req.body.xmlContent){
     \item \textbf{Data Exposure:} The parser resolves the external entity, retrieves the contents of the targeted file (e.g., \texttt{/etc/passwd}), and includes it in the XML document. This results in unauthorized disclosure of sensitive data, which is then included in the server's response and displayed in the frontend.
 \end{enumerate}
 \textbf{Mitigation:}
-To prevent XXE vulnerabilities, it is essential to disable external entity resolution and DTD processing in the XML parser. In `libxmljs`, this can be achieved by configuring the parser as follows:
+To prevent XXE vulnerabilities, we initially considered disabling external entity resolution and DTD processing in the XML parser. In `libxmljs`, this can be done with the following configuration:
 
 \begin{lstlisting}
 const doc = libxmljs.parseXml(xml, { replaceEntities: false, dtdload: false, nonet: true });
 \end{lstlisting}
 
-This configuration ensures:
+This setup ensures:
 \begin{itemize}
     \item External entities are not resolved by setting `replaceEntities: false`.
     \item External DTDs are not loaded by setting `dtdload: false`.
     \item No external network connections are made during XML parsing by using `nonet: true`.
 \end{itemize}
+
+However, due to identified vulnerabilities in `libxmljs`, we decided to switch to the more secure `fast-xml-parser` library. The updated approach is as follows:
+
+\begin{lstlisting}
+const { XMLParser } = require('fast-xml-parser');
+const parser = new XMLParser();
+const jsonObj = parser.parse(xmlcontent);
+\end{lstlisting}
+
+This ensures secure parsing without the need to manually handle external entities or DTDs, mitigating the risk of XXE attacks.
 
 \subsubsection{Sensitive Cookie Without Proper 'Secure', 'HttpOnly', and 'SameSite' Attributes}
 \label{subsubsec:sensitive_cookie_without_secure_and_httponly_attributes}
