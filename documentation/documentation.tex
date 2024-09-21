@@ -1642,7 +1642,7 @@ The vulnerability exists in the \texttt{routes/users.js} file of the Express bac
 const { braces } = require('micromatch');
 const finalSellerUsernameToSearch = braces(finalRegex, { expand: true });
 \end{lstlisting}
-Although the application employs `isolated-vm` to execute regex patterns safely, the \texttt{braces} library itself is vulnerable to attacks such as Heap memory exhaustion in versions before 3.0.3. Malicious inputs can overwhelm system memory, leading to server crashes. \\ 
+Although the application employs `isolated-vm` to execute regex patterns safely (instead of using the insecure eval()), the \texttt{braces} library itself is vulnerable to attacks such as Heap memory exhaustion in versions before 3.0.3. Malicious inputs can overwhelm system memory, leading to server crashes. \\ 
 \textbf{Exploitation:}
 An attacker can exploit this vulnerability by submitting regex patterns with an excessive number of nested braces, such as:
 
@@ -1652,7 +1652,8 @@ An attacker can exploit this vulnerability by submitting regex patterns with an 
 This input causes the \texttt{braces} library to process a massive number of nested braces, resulting in an infinite loop and rapid consumption of Heap memory. The server eventually crashes due to memory exhaustion. \\ 
 The number '536870000' is approximately the maximum number of characters that can be handled in a string by the V8 JavaScript engine, as noted in this GitHub issue: \footnotesize 'https://github.com/nodejs/node/issues/35973\#issuecomment-722253319'.\\
 \normalsize
-Malicious users can trigger this vulnerability by repeatedly submitting such patterns through the "Search" button on the 'Seller Locator' page, leading to server crashes due to Heap Memory exhaustion. \\ 
+Malicious users can trigger this vulnerability in our webapp by submitting such pattern through the "Search" button on the 'Seller Locator' page. Even a single press of the "Search" button can make the server unresponsive, preventing users from performing any actions, for example logging out. This leads to server crashes due to Heap Memory exhaustion. \\ 
+
 \textbf{Mitigation:}
 To mitigate this issue, update the \texttt{braces} package to version 3.0.3 or later, which includes a fix for this DoS vulnerability.
 
