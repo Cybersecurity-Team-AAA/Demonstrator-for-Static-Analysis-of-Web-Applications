@@ -65,7 +65,7 @@ npm start
 #in web-app-secure/client
 npm start
 ```
-Accept the self-signed certificate (only at first start): <br/>
+In order to let the browser trust the self-signed certificate, the following steps need to be followed (just once, on first boot): <br/>
 - Navigate to https://localhost:3001/ <br/>
 - Click "advanced"
 - Click "accept the risk and continue"
