@@ -57,6 +57,7 @@ npm start
 # Run in web-app-vulnerable/client
 npm start
 ```
+And you can enter the webapp by visiting http://localhost:3000
 ## Start the secure web application 
 ```
 # Run in web-app-secure/server
@@ -69,3 +70,5 @@ In order to let the browser trust the self-signed certificate, the following ste
 - Navigate to https://localhost:3001/ <br/>
 - Click "advanced"
 - Click "accept the risk and continue"
+
+After this, you can finally enter the webapp by visiting http://localhost:3000
