@@ -65,7 +65,7 @@ npm start
 #in web-app-secure/client
 npm start
 ```
-In order to let the browser trust the self-signed certificate, the following steps need to be followed (just once, on first boot): <br/>
+In order to let the browser trust the self-signed certificate, the following steps need to be followed (just once, on first start): <br/>
 - Navigate to https://localhost:3001/ <br/>
 - Click "advanced"
 - Click "accept the risk and continue"
