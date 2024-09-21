@@ -28,7 +28,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 ```
 4. Update the bash PATHs
 ```
-source .bashrc
+source ~/.bashrc
 ```
 6. Install node.js version 21
 ```
@@ -65,7 +65,7 @@ npm start
 #in web-app-secure/client
 npm start
 ```
-To do only the first start of the secure webapp to accept the self-signed certificate: <br/>
+Accept the self-signed certificate (only at first start): <br/>
 - Navigate to https://localhost:3001/ <br/>
 - Click "advanced"
 - Click "accept the risk and continue"
