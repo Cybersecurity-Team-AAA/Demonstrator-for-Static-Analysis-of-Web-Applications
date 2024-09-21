@@ -1,5 +1,6 @@
 # Demonstrator for Static Analysis of Web Applications
-Project for the Security Verification and Testing course of Politecnico di Torino
+The web appplication is a demonstrator of the use of static analysis tools for web applications for Security Verification and Testing course of Politecnico di Torino,
+based on a React front-end and an Express back-end
 
 ## Folders structure
 - documentation: contains the description of the projet, including the static analysis tools report
@@ -9,7 +10,7 @@ Project for the Security Verification and Testing course of Politecnico di Torin
 
 
 ## Requirements
-- Ubuntu 20.04.5 LTS
+- Ubuntu (tested on 20.04.5 LTS, 24.04.1 LTS)
 - Firefox Browser
 
 ## Installation
@@ -36,16 +37,16 @@ nvm install 21
 7. Install dependencies
 ```
 # Run in web-app-vulnerable/server
-sudo npm install
+npm install
 
 # Run in web-app-vulnerable/client
-sudo npm install
+npm install
 
 # Run in web-app-secure/server
-sudo npm install
+npm install
 
 # Run in web-app-secure/client
-sudo npm install
+npm install
 ```
 
 ## Start the vulnerable web application
