@@ -24,7 +24,6 @@
     "libxmljs": "^1.0.11",
     "micromatch": "^4.0.4",
     "multer": "^1.4.5-lts.1",
-    "node-serialize": "^0.0.4",
     "serve-index": "^1.9.1",
     "sqlite3": "^5.1.7",
     "winston": "^3.14.2"
