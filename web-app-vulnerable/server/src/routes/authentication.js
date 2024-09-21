@@ -104,6 +104,12 @@ router.post("/registration", function (req, res) {
                     .then(() => {
                         res.status(201).send(JSON.stringify({ "sellerName": sellerName }));  // oops
                     })
+                    .catch((e) => {
+                        if (e.message === "bad xml file") {
+                            return res.status(400).send(JSON.stringify({msg: "Bad Request", detail: "Bad XML File"}))
+                        }
+                        res.status(500).send();
+                    });
             } catch {
                 console.log("fail in xml processing, maybe seller tag or name tag is missing")
                 res.status(500).send();
