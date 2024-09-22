@@ -10,7 +10,7 @@ based on a React front-end and an Express back-end
 
 
 ## Requirements
-- Ubuntu (tested on 20.04.5 LTS, 24.04.1 LTS)
+- Ubuntu (tested on 22.04, 24.04)
 - Firefox Browser
 
 ## Installation
@@ -22,7 +22,7 @@ sudo apt install npm
 ```
 sudo apt install curl
 ```
-3. Install nvm
+3. Install nvm (installer manager for node)
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 ```
