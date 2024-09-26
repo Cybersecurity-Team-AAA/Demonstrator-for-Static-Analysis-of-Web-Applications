@@ -789,53 +789,53 @@ ash --source-dir . --ext py
 
 \subsection{Weakness scan result table of the Vulnerable Web-app}
 \begin{center}
-\begin{tabular}{| m{10cm} | c | c | c |}
+\begin{tabular}{| c | m{10cm} | c | c | c |}
 \hline
-\textbf{Weakness} & \textbf{Semgrep} & \textbf{Bearer} & \textbf{ASH} \\ 
+\textbf{Id} & \textbf{Weakness} & \textbf{Semgrep} & \textbf{Bearer} & \textbf{ASH} \\ 
 \hline
-Unencrypted request over HTTP detected & \cmark & & \cmark \\ 
+01 & Unencrypted request over HTTP detected & \cmark & & \cmark \\ 
 \hline
-Missing Helmet configuration on HTTP headers & & \cmark & \\ 
+02 & Missing Helmet configuration on HTTP headers & & \cmark & \\ 
 \hline
-Missing server configuration to reduce server fingerprinting & & \cmark & \\ 
+03 & Missing server configuration to reduce server fingerprinting & & \cmark & \\ 
 \hline
-Leakage of information in logger message & & \cmark & \\ 
+04 & Leakage of information in logger message & & \cmark & \\ 
 \hline
-Code string concatenation & \cmark & & \\ 
+05 & Code string concatenation & \cmark & & \\ 
 \hline
-Weak symmetric mode & \cmark & & \\ 
+06 & Weak symmetric mode & \cmark & & \\ 
 \hline
-Incomplete sanitization & \cmark & & \cmark \\ 
+07 & Incomplete sanitization & \cmark & & \cmark \\ 
 \hline
-eval() function detected & \cmark & & \cmark \\ 
+08 & eval() function detected & \cmark & & \cmark \\ 
 \hline
-Unsanitized dynamic input in file path & & \cmark & \\ 
+09 & Unsanitized dynamic input in file path & & \cmark & \\ 
 \hline
-React dangerouslySetInnerHTML & \cmark & \cmark & \cmark \\ 
+10 & React dangerouslySetInnerHTML & \cmark & \cmark & \cmark \\ 
 \hline
-Unsanitized user input in deserialization method & \cmark & \cmark & \cmark \\ 
+11 & Unsanitized user input in deserialization method & \cmark & \cmark & \cmark \\ 
 \hline
-Express cookie session default name & \cmark & & \cmark \\ 
+12 & Express cookie session default name & \cmark & & \cmark \\ 
 \hline
-Express cookie session no secure & \cmark & \cmark & \cmark \\ 
+13 & Express cookie session no secure & \cmark & \cmark & \cmark \\ 
 \hline
-Express cookie session no httponly & \cmark & \cmark & \cmark \\ 
+14 & Express cookie session no httponly & \cmark & \cmark & \cmark \\ 
 \hline
-Express cookie session no domain & \cmark & & \cmark \\ 
+15 & Express cookie session no domain & \cmark & & \cmark \\ 
 \hline
-Express cookie session no path & \cmark & & \cmark \\ 
+16 & Express cookie session no path & \cmark & & \cmark \\ 
 \hline
-Express cookie session no expires & \cmark & & \cmark \\ 
+17 & Express cookie session no expires & \cmark & & \cmark \\ 
 \hline
-Express check directory listing & \cmark & \cmark & \cmark \\ 
+18 & Express check directory listing & \cmark & \cmark & \cmark \\ 
 \hline
-Express check csurf middleware usage & \cmark & & \cmark \\ 
+19 & Express check csurf middleware usage & \cmark & & \cmark \\ 
 \hline
-Unsanitized input in NoSQL query & & \cmark & \\ 
+20 & Unsanitized input in NoSQL query & & \cmark & \\ 
 \hline
-Usage of default cookie configuration & & \cmark & \\ 
+21 & Usage of default cookie configuration & & \cmark & \\ 
 \hline
-Usage of default session cookie configuration & & \cmark & \\ 
+22 & Usage of default session cookie configuration & & \cmark & \\ 
 \hline
 \end{tabular}
 \end{center}
