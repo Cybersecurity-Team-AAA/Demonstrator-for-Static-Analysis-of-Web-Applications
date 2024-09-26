@@ -309,7 +309,7 @@ Note: Without a specific path, the cookie is sent for all paths on the domain.
     \item server/src/index.js:30
 \end{itemize}
 
-\paragraph{React dangerouslysetinnerhtml} \mbox{} \\ \\
+\paragraph{React dangerouslySetInnerHTML} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[par:stored_xss]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} Detection of dangerouslySetInnerHTML from non-constant definition. This can 
 inadvertently expose users to cross-site scripting (XSS) attacks if this comes from user-provided
@@ -374,7 +374,7 @@ a token or cookies.\\
     \item \texttt{server/src/index.js:234-257}
 \end{itemize}
 
-\vspace{5em} 
+\vspace{3em} 
 
 \subsection{Bearer CLI}
 Bearer CLI is a free, open-source command-line tool that scans source code for security vulnerabilities and privacy risks. Supporting languages like JavaScript, Ruby, and Python, it uses static analysis to detect issues from the OWASP Top 10 and CWE Top 25, prioritizing based on the impact on sensitive data. It provides detailed security and privacy reports to help developers quickly address critical issues.\\
@@ -570,7 +570,7 @@ The scan produces a security report detailing rule violations, file paths, and l
     \item \texttt{client/src/routes/editUserProfile.js:72}
 \end{itemize}
 
-\vspace{5em} 
+\vspace{3em} 
 
 \subsection{Automated Security Helper - ASH}
 The security helper tool was created to help you reduce the probability of a security violation in a new code, infrastructure or IAM configuration by providing a fast and easy tool to conduct preliminary security check as early as possible within your development process. \\
@@ -793,56 +793,59 @@ ash --source-dir . --ext py
 \hline
 \textbf{Weakness} & \textbf{Semgrep} & \textbf{Bearer} & \textbf{ASH} \\ 
 \hline
-Unencrypted request over HTTP detected & \cmark & & \cmark \\ 
+Unencrypted request over HTTP detected (TP) & \cmark & & \cmark \\ 
 \hline
-Missing Helmet configuration on HTTP headers & & \cmark & \\ 
+Missing Helmet configuration on HTTP headers (TP) & & \cmark & \\ 
 \hline
-Missing server configuration to reduce server fingerprinting & & \cmark & \\ 
+Missing server configuration to reduce server fingerprinting (TP) & & \cmark & \\ 
 \hline
-Leakage of information in logger message & & \cmark & \\ 
+Leakage of information in logger message (TP) & & \cmark & \\ 
 \hline
-Code string concatenation & \cmark & & \\ 
+Code string concatenation (TP) & \cmark & & \\ 
 \hline
-Weak symmetric mode & \cmark & & \\ 
+Weak symmetric mode (TP) & \cmark & & \\ 
 \hline
-Incomplete sanitization & \cmark & & \cmark \\ 
+Incomplete sanitization (TP) & \cmark & & \cmark \\ 
 \hline
-eval() function detected & \cmark & & \cmark \\ 
+eval() function detected (TP) & \cmark & & \cmark \\ 
 \hline
-Unsanitized dynamic input in file path & & \cmark & \\ 
+Unsanitized dynamic input in file path (TP) & & \cmark & \\ 
 \hline
-React dangerouslySetInnerHTML & \cmark & \cmark & \cmark \\ 
+React dangerouslySetInnerHTML (TP) & \cmark & \cmark & \cmark \\ 
 \hline
-Unsanitized user input in deserialization method & \cmark & \cmark & \cmark \\ 
+Unsanitized user input in deserialization method (TP) & \cmark & \cmark & \cmark \\ 
 \hline
-Express cookie session default name & \cmark & & \cmark \\ 
+Express cookie session default name (TP) & \cmark & & \cmark \\ 
 \hline
-Express cookie session no secure & \cmark & \cmark & \cmark \\ 
+Express cookie session no secure (TP) & \cmark & \cmark & \cmark \\ 
 \hline
-Express cookie session no httponly & \cmark & \cmark & \cmark \\ 
+Express cookie session no httponly (TP) & \cmark & \cmark & \cmark \\ 
 \hline
-Express cookie session no domain & \cmark & & \cmark \\ 
+Express cookie session no domain (TP) & \cmark & & \cmark \\ 
 \hline
-Express cookie session no path & \cmark & & \cmark \\ 
+Express cookie session no path (TP) & \cmark & & \cmark \\ 
 \hline
-Express cookie session no expires & \cmark & & \cmark \\ 
+Express cookie session no expires (TP) & \cmark & & \cmark \\ 
 \hline
-Express check directory listing & \cmark & \cmark & \cmark \\ 
+Express check directory listing (TP) & \cmark & \cmark & \cmark \\ 
 \hline
-Express check csurf middleware usage & \cmark & & \cmark \\ 
+Express check csurf middleware usage (TP) & \cmark & & \cmark \\ 
 \hline
-Unsanitized input in NoSQL query & & \cmark & \\ 
+Unsanitized input in NoSQL query (TP) & & \cmark & \\ 
 \hline
-Usage of default cookie configuration & & \cmark & \\ 
+Usage of default cookie configuration (TP) & & \cmark & \\ 
 \hline
-Usage of default session cookie configuration & & \cmark & \\ 
+Usage of default session cookie configuration (TP) & & \cmark & \\ 
+\hline
+Observable Timing Discrepancy (FP) & & \cmark & \\ 
 \hline
 \end{tabular}
 \end{center}
 
 \newpage
 
-\section{Risk Categories and Weaknesses}
+\section{Risk Categories and Exploits}
+In this section, we present the various vulnerabilities and exploits implemented in the Vulnerable Web-app, categorizing them according to their associated security Weakness. These weaknesses are mapped to the relevant OWASP Top 10 Risk Categories.
 
 \subsection{Broken Access Control}
 
