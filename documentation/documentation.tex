@@ -442,7 +442,7 @@ The scan produces a security report detailing rule violations, file paths, and l
 \end{itemize}
 \textbf{Note:} The tool is not able to detect the DOM XSS vulnerable code in 'client/src/routes/changeTheme.js:48'. \\
 
-\paragraph{Missing HTTP Only option in cookie configuration} \mbox{} \\ \\
+\paragraph{Express cookie session no httponly} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} Your cookies are at risk if the HTTP Only option is not configured. This setting prevents client-side JavaScript, such as the code that reads ``document.cookie'' values, from accessing the cookie's value. Enabling this option is crucial for websites prone to Cross-Site Scripting (XSS) attacks, because it prevents malicious scripts from obtaining the cookie's data. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -478,7 +478,7 @@ The scan produces a security report detailing rule violations, file paths, and l
     \item \texttt{server/src/index.js:16}
 \end{itemize}
 
-\paragraph{Missing Secure option in cookie configuration} \mbox{} \\ \\
+\paragraph{Express cookie session no secure} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} When a cookie lacks the Secure attribute, it can be transmitted over an unencrypted connection, making it vulnerable to interception by unauthorized parties. Enabling the Secure option ensures that cookies are only sent over HTTPS, enhancing the security of data in transit. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -505,7 +505,7 @@ The scan produces a security report detailing rule violations, file paths, and l
     \item \texttt{client/src/routes/editUserProfile.js:60}
 \end{itemize}
 
-\paragraph{Missing access restriction on directory listing} \mbox{} \\ \\
+\paragraph{Express check directory listing} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:exposure_of_information_through_directory_listing]{\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} Exposing a directory listing without restrictions can lead to unauthorized access to sensitive data or source code. This vulnerability occurs when the file structure of a server or application is made visible to users without proper access control, potentially allowing attackers to exploit the exposed file structure. \\ 
 \textbf{Severity:} Low. \\ 
@@ -648,7 +648,7 @@ ash --source-dir . --ext py
     \item \texttt{client/src/routes/sellerRegistration.js:120}
 \end{itemize}
 
-\paragraph{CSRF middleware not detected in express application}  \mbox{} \\ \\
+\paragraph{Express check csurf middleware usage}  \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:csrf_with_samesite_none_misconfiguration]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:}  Ensure you are either using one such
           as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your    
@@ -660,7 +660,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 
-\paragraph{Default session cookie name}  \mbox{} \\ \\
+\paragraph{Express cookie session default name}  \mbox{} \\ \\
 \textbf{Classification:} {\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} Using the default session cookie name can open your app to
           attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to    
@@ -672,7 +672,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 
-\paragraph{Default session settings: domain not set}  \mbox{} \\ \\
+\paragraph{Express cookie session no domain}  \mbox{} \\ \\
 \textbf{Classification:} {\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} It indicates the domain of the cookie; use it
           to compare against the domain of the server in which the URL is being requested. If they match, then
@@ -683,7 +683,7 @@ ash --source-dir . --ext py
     \item \texttt{server/src/index.js}
 \end{itemize}
 
-\paragraph{Default session settings: expires not set} \mbox{} \\ \\
+\paragraph{Express cookie session no expires} \mbox{} \\ \\
 \textbf{Classification:} {\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} Use it to set expiration date for persistent cookies. \\
 \textbf{Severity:}  Medium\\ 
@@ -693,7 +693,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 
-\paragraph{Default session settings: no-httponly} \mbox{} \\ \\
+\paragraph{Express cookie session no httponly} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cross_site_scripting]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} httpOnly not set. It ensures the cookie is sent only over
           HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks. \\
@@ -704,7 +704,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 
-\paragraph{Default session settings: path not set} \mbox{} \\ \\
+\paragraph{Express cookie session no path} \mbox{} \\ \\
 \textbf{Classification:} {\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} It indicates the path of the cookie; use it to compare against the request path. If this and domain match, then send the cookie in the request.\\
 \textbf{Severity:}  Medium\\ 
@@ -713,7 +713,7 @@ ash --source-dir . --ext py
     \item \texttt{server/src/index.js}
 \end{itemize}
 
-\paragraph{Default session settings: secure not set} \mbox{} \\ \\
+\paragraph{Express cookie session no secure} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} It ensures the browser only sends the cookie over HTTPS. \\
 \textbf{Severity:}  Medium\\ 
@@ -722,7 +722,7 @@ ash --source-dir . --ext py
     \item \texttt{server/src/index.js}
 \end{itemize}
 
-\paragraph{Directory listing/indexing enabled} \mbox{} \\ \\
+\paragraph{Express check directory listing} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:exposure_of_information_through_directory_listing]{\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and 
           files. It is recommended to disable directory listing unless it is a public resource. If you need
