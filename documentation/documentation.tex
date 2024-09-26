@@ -309,7 +309,7 @@ Note: Without a specific path, the cookie is sent for all paths on the domain.
     \item server/src/index.js:30
 \end{itemize}
 
-\paragraph{React dangerouslysetinnerhtml} \mbox{} \\ \\
+\paragraph{React dangerouslySetInnerHTML} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[par:stored_xss]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} Detection of dangerouslySetInnerHTML from non-constant definition. This can 
 inadvertently expose users to cross-site scripting (XSS) attacks if this comes from user-provided
@@ -374,7 +374,7 @@ a token or cookies.\\
     \item \texttt{server/src/index.js:234-257}
 \end{itemize}
 
-\vspace{5em} 
+\vspace{3em} 
 
 \subsection{Bearer CLI}
 Bearer CLI is a free, open-source command-line tool that scans source code for security vulnerabilities and privacy risks. Supporting languages like JavaScript, Ruby, and Python, it uses static analysis to detect issues from the OWASP Top 10 and CWE Top 25, prioritizing based on the impact on sensitive data. It provides detailed security and privacy reports to help developers quickly address critical issues.\\
@@ -570,7 +570,7 @@ The scan produces a security report detailing rule violations, file paths, and l
     \item \texttt{client/src/routes/editUserProfile.js:72}
 \end{itemize}
 
-\vspace{5em} 
+\vspace{3em} 
 
 \subsection{Automated Security Helper - ASH}
 The security helper tool was created to help you reduce the probability of a security violation in a new code, infrastructure or IAM configuration by providing a fast and easy tool to conduct preliminary security check as early as possible within your development process. \\
@@ -837,12 +837,15 @@ ash --source-dir . --ext py
 \hline
 22 & Usage of default session cookie configuration & & \cmark & \\ 
 \hline
+23 & Observable Timing Discrepancy (FP) & & \cmark & \\ 
+\hline
 \end{tabular}
 \end{center}
 
 \newpage
 
-\section{Risk Categories and Weaknesses}
+\section{Risk Categories and Exploits}
+In this section, we present the various vulnerabilities and exploits implemented in the Vulnerable Web-app, categorizing them according to their associated security Weakness. These weaknesses are mapped to the relevant OWASP Top 10 Risk Categories.
 
 \subsection{Broken Access Control}
 
