@@ -894,6 +894,7 @@ Access Control is considered broken when it is improperly configured or bypassed
 
 \subsubsection{CSRF (Cross-Site Request Forgery)}
 \label{subsubsec:csrf_with_samesite_none_misconfiguration}
+\textbf{VulnScanId:} 19 \\
 \textbf{Description:}  
 \texttt{CSRF} (Cross-Site Request Forgery) is a vulnerability categorized under \textit{broken access control}, and the same for \texttt{Sensitive Cookie with Improper SameSite Attribute}. This attack occurs when a malicious website tricks an authenticated user into making unintended requests to a vulnerable web application. As a result, attackers can perform unauthorized actions on behalf of the user without their knowledge. A common cause of this vulnerability is the misconfiguration of the `SameSite` attribute in cookies. \\ 
 The \texttt{SameSite} attribute has three possible values: `Strict`, `Lax` and `None`. When set to `None`, cookies can be sent with cross-site requests, which increases the risk of CSRF attacks. Note: setting to 'Lax' is dangerous too. 
@@ -1001,6 +1002,7 @@ GET request is authenticated and that has the privileges to do this operation.
 \subsubsection{Improper Limitation of a Pathname to a Restricted Directory}
 \label{subsubsec:improper_limitation_of_a_pathname_to_a_restricted_directory}
 
+\textbf{VulnScanId:} 07, 09 \\
 \textbf{Description:} This vulnerability belongs to the category of {\it broken access control}, it is caused by improper sanitization of an external 
 input which is used to construct a pathname used to retrieve a resource.
 \\ 
@@ -1111,6 +1113,7 @@ Cryptographic failures occur when encryption or cryptographic methods are either
 
 \subsubsection{Use of a Broken or Risky Cryptographic Algorithm}
 \label{subsubsec:use_of_a_broken_or_risky_cryptographic_algorithm}
+\textbf{VulnScanId:} 06 \\
 \textbf{Description:} This vulnerability belongs to the category of {\it cryptographic failures}, and it is caused by the use of a broken or risky cryptographic algorithm. \\ 
 \textbf{Vulnerable code:} The code is contained in the \texttt{crypto.js} file of the React frontend. The data needed to recharge the user's wallet are encrypted 
 using AES-128 in ECB mode, the data format is ("rechargeUsWallet",username,amount). The first element is a fixed string, the data are encrypted using as key the 
@@ -1137,6 +1140,7 @@ the use of a precomputation attack.
 \subsubsection{Cleartext Transmission of Sensitive Information}
 \label{subsubsec:cleartext_transmission_of_sensitive_information}
 
+\textbf{VulnScanId:} 01 \\
 \textbf{Description:} This vulnerability belongs to the category of {\it cryptographic failures}, it is caused by sending in cleartext sensitive data
 in a communication channel that can be sniffed by unauthorized actors.
 \\ 
@@ -1176,7 +1180,7 @@ export function login(username, password) {
 Injection flaws occur when an attacker sends malicious data to an interpreter, leading to unintended execution or data manipulation. Key types include SQL Injection, PHP Injection, and Script Injection (e.g., XSS), each exploiting specific vulnerabilities in data handling.
 
 \subsubsection{SQL Injection}
-An SQL injection attack involves the insertion or “injection” of an SQL query through incoming data from the client to the application. A successful SQL injection exploit can read/edit/delete sensitive data from the database, perform administration operations on the database, and in some cases issue commands to the operating system. In general, SQL injection is considered a high-impact severity.
+A SQL injection attack involves the insertion or “injection” of an SQL query through incoming data from the client to the application. A successful SQL injection exploit can read/edit/delete sensitive data from the database, perform administration operations on the database, and in some cases issue commands to the operating system. In general, SQL injection is considered a high-impact severity.
 \\ \textbf{Vulnerable code:} \\
 In \texttt{api.js}: 
 \begin{lstlisting}
@@ -1297,6 +1301,7 @@ Cross-Site Scripting (XSS) involves injecting malicious HTML with embedded scrip
 \paragraph{Stored Cross-Site Scripting}
 \label{par:stored_xss}
 Stored XSS is particularly dangerous because the malicious script is stored on the server and affects all users who visit the compromised page without any need for the user to click on a malicious link. \\
+\textbf{VulnScanId:} 10 \\
 \textbf{Vulnerable code:}
 Consider the situation where sellers can register and provide their street address. In the frontend React application, the street address is displayed using the \texttt{dangerouslySetInnerHTML} property, which can render HTML content provided by the user. The vulnerable code in \texttt{routes/sellerRegistration.js} is as follows:
 
@@ -1332,6 +1337,7 @@ The most effective way to avoid DOM-based JavaScript injection vulnerabilities i
 \paragraph{Reflected Cross-Site Scripting}
 
 Reflected Cross-Site Scripting (XSS) occurs when user input is reflected in the server's response without proper validation. For example, an attacker might craft a malicious search URL containing a script. The server processes the request without sanitizing the input, and the frontend displays a message like "You are searching for XYZ," where "XYZ" is the malicious script. The browser then executes the script, potentially exposing sensitive data. Reflected XSS, also known as Non-Persistent XSS, happens in a single request-response cycle. \\ 
+\textbf{VulnScanId:} 10 \\
 \textbf{Vulnerable code:}
 Consider the situation where users can search for sellers by username. The vulnerable React code in \texttt{routes/locatorPage.js} retrieves the seller's username from the URL query parameter \texttt{sellerUsername} and displays it using the \texttt{dangerouslySetInnerHTML} property. \\ 
 Here is the vulnerable code:
@@ -1353,6 +1359,7 @@ To prevent Reflected XSS vulnerabilities, it is essential to set cookies with th
 DOM-Based Cross-Site Scripting (XSS) is a type of XSS attack caused by improper handling of untrusted input on the client-side, rather than the server-side. This means the vulnerability exists within the client-side code (e.g., JavaScript) that manipulates the DOM, without any need to reach back to the web server. As standalone web applications become more prevalent, the importance of securing client-side code against DOM XSS has increased.
 
 In a DOM XSS attack, the malicious script is injected and executed entirely within the browser, modifying the DOM to perform unauthorized actions or exfiltrate sensitive data. \\ 
+\textbf{VulnScanId:} 10 \\
 \textbf{Vulnerable code:}
 Consider the possibility for users to change the theme color. The vulnerable React code in \texttt{routes/changeTheme.js} retrieves the theme color (\texttt{themeChosen} variable) from the '\texttt{color}' URL parameter and displays it using the \texttt{dangerouslySetInnerHTML} property:
 
@@ -1372,6 +1379,7 @@ To prevent DOM XSS vulnerabilities, it is essential to set cookies with the \tex
 \subsubsection{Improper Neutralization of Directives in Dynamically Evaluated Code}
 \label{subsubsec:improper_neutralization_of_directives_in_dynamically_evaluated_code}
 
+\textbf{VulnScanId:} 05, 08 \\
 \textbf{Description:} This vulnerability belongs to the category of {\it injection}, and it is caused by incorrect validation or sanitization of 
 the input in a dynamic evaluation call.
 \\ 
@@ -1574,6 +1582,7 @@ This ensures secure parsing without the need to manually handle external entitie
 \label{subsubsec:sensitive_cookie_without_secure_and_httponly_attributes}
 
 A common 'security misconfiguration' weakness involves cookies lacking one or more essential attributes such as 'Secure', 'HttpOnly', or an appropriate 'SameSite' setting (though the 'Improper SameSite Attribute' weakness actually belongs to 'broken access control' risk category). These attributes serve different but complementary purposes in protecting cookies from various security threats. \\ 
+\textbf{VulnScanId:} 13, 14 \\
 \textbf{Vulnerable code:}
 There is a dangerous cookie configuration in \texttt{index.js} file of express backend:
 
@@ -1628,6 +1637,7 @@ router.post("/registration", function (req, res) {
 
 \subsubsection{Exposure of Information Through Directory Listing}
 \label{subsubsec:exposure_of_information_through_directory_listing}
+\textbf{VulnScanId:} 18 \\
 \textbf{Description:} This vulnerability belongs to the category of \textit{security misconfiguration}, and it is caused by exposing a directory listing which
 provides an attacker with the index of all the resource located in the server directory.
 \\
@@ -1835,6 +1845,7 @@ Software and data integrity failures relate to code and infrastracture that does
 
 \subsubsection{Deserialization of untrusted data}
 \label{subsubsec:deserialization_of_untrusted_data}
+\textbf{VulnScanId:} 11 \\
 \textbf{Description:} This vulnerability belongs to the category of {\it software and data integrity failures}, it is caused by the deserialization 
 of data provided by an user using the \texttt{node-serialize} package. 
 \\ 
