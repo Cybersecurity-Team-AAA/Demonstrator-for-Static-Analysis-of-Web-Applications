@@ -191,9 +191,9 @@ $ docker run -e SEMGREP_APP_TOKEN=<TOKEN> --rm -v "${PWD}:/src" semgrep/semgrep 
 \item Go to your app's root directory and run \texttt{semgrep ci --code}. This will scan your project to check for vulnerabilities in your source code.
 \end{enumerate}
 
-\subsubsection{Vulnerable web-app analysis}
+\subsubsection{Vulnerable Web-app Analysis}
 
-\paragraph{React insecure request} \mbox{} \\ \\
+\paragraph{Unencrypted request over HTTP detected} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cleartext_transmission_of_sensitive_information]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} Unencrypted request over HTTP detected. \\ 
 \textbf{Severity:} High. \\ 
@@ -237,7 +237,7 @@ library instead or use a Regex with a global flag. \\
     \item server/src/routes/transactions.js:234-258
 \end{itemize}
 
-\paragraph{Eval detected} \mbox{} \\ \\
+\paragraph{eval() function detected} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:improper_neutralization_of_directives_in_dynamically_evaluated_code]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} Detected the use of eval(). eval() can be dangerous if used to evaluate dynamic content. If this 
 content can be input from outside the program, this may be a code injection vulnerability. Ensure evaluated content is 
@@ -321,7 +321,7 @@ DOMPurify to sanitize your HTML. \\
     \item client/src/routes/sellerRegistration.js:120
 \end{itemize}
 
-\paragraph{Express third party object deserialization} \mbox{} \\ \\
+\paragraph{Unsanitized user input in deserialization method} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:deserialization_of_untrusted_data]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} The following function call $SER.$FUNC accepts user controlled data which 
 can result in Remote Code Execution (RCE) through Object Deserialization. It is recommended to 
@@ -373,6 +373,8 @@ a token or cookies.\\
 \begin{itemize}
     \item \texttt{server/src/index.js:234-257}
 \end{itemize}
+
+\vspace{5em} 
 
 \subsection{Bearer CLI}
 Bearer CLI is a free, open-source command-line tool that scans source code for security vulnerabilities and privacy risks. Supporting languages like JavaScript, Ruby, and Python, it uses static analysis to detect issues from the OWASP Top 10 and CWE Top 25, prioritizing based on the impact on sensitive data. It provides detailed security and privacy reports to help developers quickly address critical issues.\\
@@ -431,7 +433,7 @@ The scan produces a security report detailing rule violations, file paths, and l
     \item \texttt{server/src/routes/transactions.js:258}
 \end{itemize}
 
-\paragraph{Unsanitized user input in React inner HTML method (XSS)} \mbox{} \\ \\
+\paragraph{React dangerouslySetInnerHTML} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:cross_site_scripting]{\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} Using React's dangerouslySetInnerHTML with unsanitized data can introduce Cross-Site Scripting (XSS) vulnerabilities. This occurs when external input is embedded directly into the HTML without proper sanitization, allowing attackers to inject malicious scripts. \\ 
 \textbf{Severity:} High. \\ 
@@ -478,7 +480,7 @@ The scan produces a security report detailing rule violations, file paths, and l
     \item \texttt{server/src/index.js:16}
 \end{itemize}
 
-\paragraph{Missing Secure option in cookie configuration} \mbox{} \\ \\
+\paragraph{Express cookie session no secure} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} When a cookie lacks the Secure attribute, it can be transmitted over an unencrypted connection, making it vulnerable to interception by unauthorized parties. Enabling the Secure option ensures that cookies are only sent over HTTPS, enhancing the security of data in transit. \\ 
 \textbf{Severity:} Medium. \\ 
@@ -568,6 +570,8 @@ The scan produces a security report detailing rule violations, file paths, and l
     \item \texttt{client/src/routes/editUserProfile.js:72}
 \end{itemize}
 
+\vspace{5em} 
+
 \subsection{Automated Security Helper - ASH}
 The security helper tool was created to help you reduce the probability of a security violation in a new code, infrastructure or IAM configuration by providing a fast and easy tool to conduct preliminary security check as early as possible within your development process. \\
 More info here: \footnotesize\url{https://github.com/awslabs/automated-security-helper}
@@ -639,7 +643,7 @@ ash --source-dir . --ext py
     \item \texttt{client/src/api/users.js}
 \end{itemize}
 
-\paragraph{Detection of dangerouslySetInnerHTML from non-constant definition} \mbox{} \\ \\
+\paragraph{React dangerouslySetInnerHTML} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[par:stored_xss]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} This can inadvertently expose users to cross-site scripting (XSS) attacks if this comes from user-provided input. If dangerouslySetInnerHTML is needed, a sanitization library such as DOMPurify to sanitize the HTML is suggested. \\ 
 \textbf{Severity:}  Medium \\ 
@@ -660,7 +664,7 @@ ash --source-dir . --ext py
 \end{itemize}
 
 
-\paragraph{Default session cookie name}  \mbox{} \\ \\
+\paragraph{Express cookie session default name}  \mbox{} \\ \\
 \textbf{Classification:} {\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} Using the default session cookie name can open your app to
           attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to    
@@ -713,7 +717,7 @@ ash --source-dir . --ext py
     \item \texttt{server/src/index.js}
 \end{itemize}
 
-\paragraph{Default session settings: secure not set} \mbox{} \\ \\
+\paragraph{Express cookie session no secure} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:sensitive_cookie_without_secure_and_httponly_attributes]{\textcolor{red}{True} \textcolor{red}{positive}.} \\ 
 \textbf{Description:} It ensures the browser only sends the cookie over HTTPS. \\
 \textbf{Severity:}  Medium\\ 
@@ -742,7 +746,7 @@ ash --source-dir . --ext py
     \item \texttt{server/src/routes/authentication.js:69}
 \end{itemize}
 
-\paragraph{Third party object deserialization} \mbox{} \\ \\
+\paragraph{Unsanitized user input in deserialization method} \mbox{} \\ \\
 \textbf{Classification:} \hyperref[subsubsec:deserialization_of_untrusted_data]{\textcolor{red}{True} \textcolor{red}{positive}.} \\
 \textbf{Description:} The following function call \texttt{node\_serialize.unserialize} accepts user controlled data which can result in Remote Code Execution (RCE) through Object Deserialization. It is recommended to use secure data processing alternatives such as JSON.parse() and Buffer.from() \\ 
 \textbf{Severity:} Medium \\ 
@@ -781,8 +785,9 @@ ash --source-dir . --ext py
     \item \texttt{/src/server/src/routes/transactions.js:234-257}
 \end{itemize}
 
+\newpage
 
-\subsection{Weakness scan result table}
+\subsection{Weakness scan result table of the Vulnerable Web-app}
 \begin{center}
 \begin{tabular}{| m{10cm} | c | c | c |}
 \hline
