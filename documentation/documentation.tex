@@ -791,51 +791,51 @@ ash --source-dir . --ext py
 \begin{center}
 \begin{tabular}{| c | m{10cm} | c | c | c |}
 \hline
-\textbf{Id} & \textbf{Weakness} & \textbf{Semgrep} & \textbf{Bearer} & \textbf{ASH} \\ 
+\textbf{VulnScanId} & \textbf{Weakness} & \textbf{Semgrep} & \textbf{Bearer} & \textbf{ASH} \\ 
 \hline
-01 & Unencrypted request over HTTP detected & \cmark & & \cmark \\ 
+01 & Unencrypted request over HTTP detected (TP) & \cmark & & \cmark \\ 
 \hline
-02 & Missing Helmet configuration on HTTP headers & & \cmark & \\ 
+02 & Missing Helmet configuration on HTTP headers (TP) & & \cmark & \\ 
 \hline
-03 & Missing server configuration to reduce server fingerprinting & & \cmark & \\ 
+03 & Missing server configuration to reduce server fingerprinting (TP) & & \cmark & \\ 
 \hline
-04 & Leakage of information in logger message & & \cmark & \\ 
+04 & Leakage of information in logger message (TP) & & \cmark & \\ 
 \hline
-05 & Code string concatenation & \cmark & & \\ 
+05 & Code string concatenation (TP) & \cmark & & \\ 
 \hline
-06 & Weak symmetric mode & \cmark & & \\ 
+06 & Weak symmetric mode (TP) & \cmark & & \\ 
 \hline
-07 & Incomplete sanitization & \cmark & & \cmark \\ 
+07 & Incomplete sanitization (TP) & \cmark & & \cmark \\ 
 \hline
-08 & eval() function detected & \cmark & & \cmark \\ 
+08 & eval() function detected (TP) & \cmark & & \cmark \\ 
 \hline
-09 & Unsanitized dynamic input in file path & & \cmark & \\ 
+09 & Unsanitized dynamic input in file path (TP) & & \cmark & \\ 
 \hline
-10 & React dangerouslySetInnerHTML & \cmark & \cmark & \cmark \\ 
+10 & React dangerouslySetInnerHTML (TP) & \cmark & \cmark & \cmark \\ 
 \hline
-11 & Unsanitized user input in deserialization method & \cmark & \cmark & \cmark \\ 
+11 & Unsanitized user input in deserialization method (TP) & \cmark & \cmark & \cmark \\ 
 \hline
-12 & Express cookie session default name & \cmark & & \cmark \\ 
+12 & Express cookie session default name (TP) & \cmark & & \cmark \\ 
 \hline
-13 & Express cookie session no secure & \cmark & \cmark & \cmark \\ 
+13 & Express cookie session no secure (TP) & \cmark & \cmark & \cmark \\ 
 \hline
-14 & Express cookie session no httponly & \cmark & \cmark & \cmark \\ 
+14 & Express cookie session no httponly (TP) & \cmark & \cmark & \cmark \\ 
 \hline
-15 & Express cookie session no domain & \cmark & & \cmark \\ 
+15 & Express cookie session no domain (TP) & \cmark & & \cmark \\ 
 \hline
-16 & Express cookie session no path & \cmark & & \cmark \\ 
+16 & Express cookie session no path (TP) & \cmark & & \cmark \\ 
 \hline
-17 & Express cookie session no expires & \cmark & & \cmark \\ 
+17 & Express cookie session no expires (TP) & \cmark & & \cmark \\ 
 \hline
-18 & Express check directory listing & \cmark & \cmark & \cmark \\ 
+18 & Express check directory listing (TP) & \cmark & \cmark & \cmark \\ 
 \hline
-19 & Express check csurf middleware usage & \cmark & & \cmark \\ 
+19 & Express check csurf middleware usage (TP) & \cmark & & \cmark \\ 
 \hline
-20 & Unsanitized input in NoSQL query & & \cmark & \\ 
+20 & Unsanitized input in NoSQL query (TP) & & \cmark & \\ 
 \hline
-21 & Usage of default cookie configuration & & \cmark & \\ 
+21 & Usage of default cookie configuration (TP) & & \cmark & \\ 
 \hline
-22 & Usage of default session cookie configuration & & \cmark & \\ 
+22 & Usage of default session cookie configuration (TP) & & \cmark & \\ 
 \hline
 23 & Observable Timing Discrepancy (FP) & & \cmark & \\ 
 \hline
